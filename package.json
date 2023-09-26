@@ -9,13 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@sinclair/typebox": "^0.31.17",
+    "env-schema": "^5.2.0",
+    "mysql2": "^3.6.1",
     "next": "latest",
     "pino": "^8.15.1",
     "react": "latest",
     "react-dom": "latest"
   },
   "devDependencies": {
-    "@types/node": "latest",
+    "@types/node": "^20.7.0",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "autoprefixer": "latest",
