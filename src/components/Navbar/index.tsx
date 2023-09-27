@@ -63,7 +63,7 @@ export default function Navbar() {
                         Ruin Manga
                     </span>
                 </div>
-                <div className="flex md:order-2 gap-4">
+                <div className="flex flex-row md:order-2 gap-4">
                     <Link href="/login">LogIn</Link>                    
                 </div>
                 <button data-collapse-toggle='navbar-sticky' type='button'
