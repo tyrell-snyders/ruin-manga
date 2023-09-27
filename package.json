@@ -13,6 +13,7 @@
     "dependencies": {
         "@commitlint/cli": "^17.7.1",
         "@commitlint/config-conventional": "^17.7.0",
+        "@headlessui/react": "^1.7.17",
         "@sinclair/typebox": "^0.31.17",
         "env-schema": "^5.2.0",
         "mysql2": "^3.6.1",
