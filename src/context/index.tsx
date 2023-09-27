@@ -1,5 +1,6 @@
 'use client'
 
+import { logger } from '@/utils/logger';
 import { usePathname, useRouter } from 'next/navigation'
 import { createContext, useState, useEffect } from 'react'
 

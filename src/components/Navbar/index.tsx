@@ -1,7 +1,7 @@
 'use client'
 
 import { navOptions } from "@/utils/links"
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import Link from "next/link"
 import { useRouter, usePathname } from "next/navigation"
 import CommonModal from "../CommonModal"
@@ -13,13 +13,20 @@ function NavItems(props: any) {
         isModalView,
         router
     } = props
+
+    useEffect(() => {
+        logger.info(`Common Modal {isModalView}: ${isModalView}`)
+    }, [])
+
     return (
         <div className={`items-center justify-between w-full md:flex md:w-auto ${isModalView ? "" : 'hidden'}`} id='nav-items'>
-            <ul className={`flex flex-col p-4 md:p-0 mt-4 font-medium rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 bg-gray-800`}>
+            <ul className={`flex flex-col p-4 md:p-0 mt-4 font-medium rounded-lg md:flex-row md:space-x-8 md:mt-0 md:border-0 ${
+                isModalView ? "border-none": "border-white"
+            }`}>
                 {
                     navOptions.map(item => (
                         <li
-                            className="curosr-pointer block py-2 pl-3 pr-4 text-white rounded md:p-0"
+                            className="cursor-pointer block py-2 pl-3 pr-4 text-white rounded md:p-0"
                             key={item.id}
                             onClick={() => router.push(item.path)}
                         >
@@ -44,7 +51,6 @@ export default function Navbar() {
 
     const pathName = usePathname()
     const router = useRouter()
-
 
     return (
         <nav className='bg-gray-700 fixed w-full z-20 top-0 border-b border-white'>
