@@ -49,9 +49,9 @@ export default function Trending() {
     }, [])
 
     return (
-        <section className='bg-gray-700 rounded-lg mt-20 mb-10 ml-8 mr-8 sm:py-16 border border-gray-200'>
-            <div className="mx-8 my-24 px-4 sm:px-6">
-                <div className="grid gap-6 sm:grid-cols-4 sm:gap-4">
+        <section className='bg-gray-700 rounded-lg mt-20 mb-10 sm:py-16 border border-gray-200'>
+            <div className="mx-4 my-10 px-4 sm:px-6">
+                <div className="grid gap-6 lg:grid-cols-4 sm:gap-4 md:grid-cols-2">
                     {
                         dummyData && dummyData.length ?
                         dummyData.map((item) => (
