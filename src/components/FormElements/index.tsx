@@ -15,7 +15,7 @@ export default function InputComponent(props: InputComponentProps) {
                 <input 
                     placeholder={placeholder}
                     type={type || 'text'}
-                    value={value}
+                    value={value || ''}
                     onChange={onChange}
                     className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mr-0 ml-0 text-base block bg-gray-700 border-gray-300 rounded-3xl"
                 />

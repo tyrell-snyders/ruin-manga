@@ -8,12 +8,12 @@ import Cookies from "js-cookie"
 import InputComponent from "@/components/FormElements"
 
 interface FormData {
-    email: string;
+    username: string;
     password: string;
 }
 
 const initForm: FormData = {
-    email: '',
+    username: '',
     password: ''
 }
 
@@ -35,7 +35,7 @@ export default function Login() {
     const [formData, setFormData] = useState(initForm)
 
     const isValid = () => {
-        return formData && formData.email && formData.email.trim() !== '' 
+        return formData && formData.username && formData.username.trim() !== '' 
             && formData.password && formData.password.trim() !== '' 
                 ? true : false
     }
@@ -57,7 +57,6 @@ export default function Login() {
                             <div className="w-full mt-6 mr-0 mb-0 ml-0 relative space-y-8">
                                 {
                                     loginFromControls.map(controlItem => 
-                                            controlItem.componnentType === 'input' ? (
                                             <InputComponent 
                                                 key={controlItem.id}
                                                 type={controlItem.type}
@@ -70,8 +69,7 @@ export default function Login() {
                                                         [controlItem.id]: e.target.value
                                                     })}
                                                 }
-                                            />
-                                        ) : null    
+                                            />  
                                     )
                                 }
                                 <button
@@ -81,6 +79,14 @@ export default function Login() {
                                 >
                                     Login
                                 </button>
+                                <div className="flex flex-col gap-2">
+                                    <p>New to website ?</p>
+                                    <button className={styles.button}
+                                        onClick={() => router.push('/register')}
+                                    >
+                                        Register
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
