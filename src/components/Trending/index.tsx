@@ -5,8 +5,9 @@ import { useRouter, usePathname } from "next/navigation"
 import { GlobalContext } from "@/context"
 import { logger } from "@/utils/logger"
 import dynamic from 'next/dynamic'
-import { getTrending } from '@/services/dummyData'
+// import { getTrending } from '@/services/dummyData'
 import TrendingTile from './TrendingTile'
+import { getTrendingComics } from '@/services/comic/trending'
 
 interface TrendingItem {
     id: number;
@@ -23,30 +24,51 @@ export default function Trending() {
 
     //Use State
     const [dummyData, setDummyData] = useState<TrendingItem[]>([])
+    const [trendingData, setTrendingData] = useState<unknown[]>([])
 
     if (context === null) {
         logger.error("No context")
         return null;
     }
 
-    const getDummyData = async () => {
+    // const getDummyData = async () => {
+    //     try {
+    //         const result = await getTrending();
+    //         if (result === null) {
+    //             logger.error(`There is no data`);
+    //         } else {
+    //             setDummyData(result as unknown as TrendingItem[]); // Type assertion here
+    //         }
+    //     } catch (error) {
+    //         if (error instanceof Error) {
+    //             logger.error(`Error getting trend data: ${error.message}`);
+    //         }
+    //     }
+    // }
+
+    const getTrending = async() => {
         try {
-            const result = await getTrending();
-            if (result === null) {
-                logger.error(`There is no data`);
-            } else {
-                setDummyData(result as TrendingItem[]); // Type assertion here
-            }
-        } catch (error) {
-            if (error instanceof Error) {
-                logger.error(`Error getting trend data: ${error.message}`);
-            }
+            const result = await getTrendingComics()
+            if (result === null)
+                logger.error(`There is no data`)
+            else
+                setTrendingData(result)
+        } catch (e) {
+            if (e instanceof Error)
+                logger.error(`Error getting trend data: ${e.message}`)
         }
     }
 
+    // useEffect(() => {
+    //     getDummyData()
+    // }, [])
+
     useEffect(() => {
-        getDummyData()
+        getTrending()
     }, [])
+
+    console.log(trendingData);
+    
 
     return (
         <section className='bg-gray-700 rounded-lg mt-20 mb-10 sm:py-16 border border-gray-200'>
