@@ -16,7 +16,6 @@ export const GET = async () => {
 
         if (response.ok) {
             const data = await response.json();
-            logger.info(`Data: ${JSON.stringify(data)}`);
             return NextResponse.json({
                 data,
                 message: 'Got Trending',
