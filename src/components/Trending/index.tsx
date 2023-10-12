@@ -35,7 +35,6 @@ export default function Trending() {
     const getTrending = async () => {
         try {
             const result = await getTrendingComics();
-            console.log(result); // Log the fetched data
             if (result && typeof result === 'object') {
                 // Transform the object to an array of objects
                 const dataArray = Object.values(result);
@@ -60,15 +59,16 @@ export default function Trending() {
                 <div className="grid gap-6 lg:grid-cols-4 sm:gap-4 md:grid-cols-2">
                     {
                         trendingData && trendingData.length ?
-                        trendingData.map((item, id) => 
-                            <article 
-                                key={id}
-                                className="border border-gray-800 relative flex flex-col overflow-hidden border cursor-pointer rounded-lg shadow-xl"
-                            >
-                                <TrendingTile item={item?.data} />
-                            </article> 
-                                
-                        ) : (
+                        trendingData.map((item, i) => {
+                            return ( 
+                                <article 
+                                    key={i}
+                                    className="border border-gray-800 relative flex flex-col overflow-hidden border cursor-pointer rounded-lg shadow-xl"
+                                >
+                                    <TrendingTile item={item?.data as any[]} />
+                                </article>
+                                )
+                        }) : (
                             <h1 className="flex text-xl font-bold">No Data Found</h1>
                         )
                     }
