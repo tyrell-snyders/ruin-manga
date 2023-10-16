@@ -7,8 +7,6 @@ export default function TrendingTile(props: any) {
     const router = useRouter();
     const { item } = props;
 
-    console.log(item?.data)
-
     return (
         <>
             <div onClick={() => router.push('/manga')}>
@@ -19,7 +17,7 @@ export default function TrendingTile(props: any) {
                     />
                 </div> */}
                 <div className="my-4 mx-auto flex w-10/12 flex-col items-start justify-between">
-                    <h3 className='mb-2 text-gray-400 text-sm'>Hi</h3>
+                    <h3 className='mb-2 text-gray-400 text-sm'>{item.attributes?.title?.en || item.attributes?.title?.ja}</h3>
                 </div>
             </div>
         </>

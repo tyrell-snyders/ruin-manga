@@ -45,27 +45,22 @@ export default function Trending() {
         fetchData();
     }, []);
 
-
-    // console.log(trendingData[0].data)
-
     let data
-    data = trendingData[0]
-
-    // console.log(data?.data)
+    data = trendingData[0]?.data
     
     return (
         <section className='bg-gray-700 rounded-lg mt-20 mb-10 sm:py-16 border border-gray-200'>
             <div className="mx-4 my-10 px-4 sm:px-6">
                 <div className="grid gap-6 lg:grid-cols-4 sm:gap-4 md:grid-cols-2">
                     {
-                        data && trendingData.length ?
-                        trendingData.map((item: any, i: number) => {
+                        data?.data && data?.data.length ?
+                        data?.data.map((item: any, i: number) => {
                             return ( 
                                 <article 
                                     key={i}
                                     className="border border-gray-800 relative flex flex-col overflow-hidden border cursor-pointer rounded-lg shadow-xl"
                                 >
-                                    <TrendingTile item={item?.data} />
+                                    <TrendingTile item={item} />
                                 </article>
                                 )
                         }) : (
