@@ -62,7 +62,7 @@ export default function Trending() {
                                 >
                                     <TrendingTile item={item} />
                                 </article>
-                                )
+                            )
                         }) : (
                             <h1 className="flex text-xl font-bold">No Data Found</h1>
                         )

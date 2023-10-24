@@ -1,11 +1,44 @@
 'use client'
 
+import { GlobalContext } from "@/context";
+import { Relationship } from "@/utils/interface";
+import { logger } from "@/utils/logger";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 export default function TrendingTile(props: any) {
+    // Context
+    const context = useContext(GlobalContext);
+
     const router = useRouter();
     const { item } = props;
+
+    if (context === null) {
+        logger.error("No context")
+        return null;
+    }
+
+    const { coverArt, setcoverArt } = context
+
+    const relationshipTypes = item.relationships.map((relationship: Relationship) => {
+        if (relationship.type === 'cover_art')
+            return {relationship}
+    }).filter((relationship: Relationship) => relationship)
+    .slice(0, 10)
+
+    useEffect(() => {
+        for(const relationship of relationshipTypes) {
+            setcoverArt((prvState) => prvState + relationship)
+        }
+    }, [])
+
+    const getCoverArt = (art: Relationship[]) => {
+
+    }
+
+    useEffect(() => {
+        getCoverArt(coverArt)
+    }, [coverArt])
 
     return (
         <>

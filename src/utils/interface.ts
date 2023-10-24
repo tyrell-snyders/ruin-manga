@@ -7,3 +7,10 @@ export interface TrendingItem {
     message: string,
     success: boolean
 }
+
+export interface Relationship {
+    id: string,
+    type: string
+}
+
+
