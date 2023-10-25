@@ -20,25 +20,20 @@ export default function TrendingTile(props: any) {
 
     const { coverArt, setcoverArt } = context
 
-    const relationshipTypes = item.relationships.map((relationship: Relationship) => {
+    const relationshipTypes: Relationship[] = item.relationships.map((relationship: Relationship) => {
         if (relationship.type === 'cover_art')
             return {relationship}
     }).filter((relationship: Relationship) => relationship)
     .slice(0, 10)
 
-    useEffect(() => {
-        for(const relationship of relationshipTypes) {
-            setcoverArt((prvState) => prvState + relationship)
-        }
-    }, [])
-
-    const getCoverArt = (art: Relationship[]) => {
-
-    }
+    
 
     useEffect(() => {
-        getCoverArt(coverArt)
-    }, [coverArt])
+        const updatedCoverArt = [...coverArt, ...relationshipTypes];
+        setcoverArt(updatedCoverArt);
+    }, []);
+
+    console.log(coverArt)
 
     return (
         <>
