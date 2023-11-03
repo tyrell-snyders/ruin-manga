@@ -5,12 +5,21 @@ import { getCoverArt } from "@/services/comic/coverArt"
 import { ArtData, Relationship } from "@/utils/interface"
 import { logger } from "@/utils/logger"
 import { useRouter } from "next/navigation"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useState, useRef } from "react"
 
 export default function TrendingTile(props: any) {
 
-    const [mangId, setMangaId] = useState<string>('')
+    const context = useContext(GlobalContext)
+
     const [coverFileName, setCoverFileName] = useState<string>('')
+
+    if (context === null) {
+        logger.error("No context provided")
+        return null;
+    }
+
+    const { mangaId, setMangaId } = context
+    const [id, setId] = useState<string>('')
 
     const router = useRouter()
     const { item, coverArt } = props
@@ -20,7 +29,6 @@ export default function TrendingTile(props: any) {
             const result = await getCoverArt(coverId);
             if (result.data.data.attributes.fileName != undefined)
                 setCoverFileName(result.data.data.attributes.fileName)
-                // console.log(result.data.data.attributes.fileName)
             else
                 return 'No Data'
         } catch (e) {
@@ -36,15 +44,13 @@ export default function TrendingTile(props: any) {
                 getArt(coverArt)
             }
             art()
+            if (item?.id != null) {
+                setId(item?.id)
+            }
         }
     }, [item]);
 
-    useEffect(() => {
-        if (item?.id != null) {
-            setMangaId(item?.id)
-        }
-    }, [item])
-
+    
     return (
         <>
             <div onClick={() => router.push('/manga')}>
@@ -52,8 +58,9 @@ export default function TrendingTile(props: any) {
                     {
                         coverFileName != null ? 
                             <img
-                                src={`https://uploads.mangadex.org/covers/${mangId}/${coverFileName}.256.jpg`} alt={item.slug}
+                                src={`https://uploads.mangadex.org/covers/${id}/${coverFileName}.256.jpg`} alt={item.slug}
                                 className="h-full w-full object-cover transition-all duration-300 group-hover:scale-125"
+                                loading="lazy"
                             /> : null
                     }
                 </div>

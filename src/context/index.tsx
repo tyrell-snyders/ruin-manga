@@ -12,6 +12,8 @@ type GlobalContextValue = {
     setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
     coverArt: Array<string>;
     setcoverArt: React.Dispatch<React.SetStateAction<Array<string>>>;
+    mangaId: string;
+    setMangaId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const GlobalContext = createContext<GlobalContextValue | null>(null)
@@ -23,6 +25,7 @@ export default function GlobalState({ children } : {children: React.ReactNode}) 
     const [isAuth, setIsAuth] = useState(false)
     const [user, setUser] = useState([])
     const [coverArt, setcoverArt] = useState<Array<string>>([])
+    const [mangaId, setMangaId] = useState<string>('')
 
     const router = useRouter()
     const pathName = usePathname()
@@ -32,7 +35,8 @@ export default function GlobalState({ children } : {children: React.ReactNode}) 
             <GlobalContext.Provider value={{
                 showNavModal, setShowNavModal, 
                 isAuth, setIsAuth,
-                coverArt, setcoverArt
+                coverArt, setcoverArt,
+                mangaId, setMangaId
             }}>
                 {children}
             </GlobalContext.Provider>
