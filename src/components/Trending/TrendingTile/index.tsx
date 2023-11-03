@@ -8,21 +8,12 @@ import { useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
 
 export default function TrendingTile(props: any) {
-    // Context
-    const context = useContext(GlobalContext)
 
     const [mangId, setMangaId] = useState<string>('')
     const [coverFileName, setCoverFileName] = useState<string>('')
 
     const router = useRouter()
     const { item, coverArt } = props
-
-    if (context === null) {
-        logger.error("No context")
-        return null;
-    }
-
-    const { cover, setCover } = context
 
     const getArt = async(coverId: string) => {
         try {
