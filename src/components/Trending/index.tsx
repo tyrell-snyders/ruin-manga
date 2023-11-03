@@ -5,10 +5,9 @@ import { useRouter, usePathname } from "next/navigation"
 import { GlobalContext } from "@/context"
 import { logger } from "@/utils/logger"
 import dynamic from 'next/dynamic'
-// import { getTrending } from '@/services/dummyData'
 import TrendingTile from './TrendingTile'
 import { getTrendingComics } from '@/services/comic/trending'
-import { TrendingItem } from '@/utils/interface'
+import { Relationship, TrendingItem } from '@/utils/interface'
 
 
 export default function Trending() {
@@ -17,17 +16,22 @@ export default function Trending() {
 
     //Use State
     const [trendingData, setTrendingData] = useState<TrendingItem[]>([])
+    // const [trend, setTrend] = useState<any[]>([])
 
     if (context === null) {
         logger.error("No context")
         return null;
     }
 
+    const { coverArt, setcoverArt } = context
+
+    
     const getTrending = async () => {
         try {
             const result = await getTrendingComics() as TrendingItem;
             if (result && typeof result === 'object') {
                 setTrendingData([result]);
+                // setTrend([result])
             } else {
                 logger.error('Fetched data is not in the expected format.');
             }
@@ -47,6 +51,25 @@ export default function Trending() {
 
     let data
     data = trendingData[0]?.data
+
+
+    const dta = data?.data
+    let coverArtIds: string[] = []
+
+    if (dta && dta.length > 0) {
+        // Extract IDs with type 'cover_art'
+        coverArtIds = dta
+            .map((d) => d.relationships)
+            .flat() // Flatten the nested arrays
+            .filter((relationship) => relationship.type === 'cover_art')
+            .map((relationship) => relationship.id);
+    } else {
+        console.log("dta is null");
+    }
+
+    useEffect(() => {
+        setcoverArt(coverArtIds)
+    }, [dta])
     
     return (
         <section className='bg-gray-700 rounded-lg mt-20 mb-10 sm:py-16 border border-gray-200'>
@@ -60,7 +83,7 @@ export default function Trending() {
                                     key={i}
                                     className="border border-gray-800 relative flex flex-col overflow-hidden border cursor-pointer rounded-lg shadow-xl"
                                 >
-                                    <TrendingTile item={item} />
+                                    <TrendingTile item={item} coverArt={coverArt[i]} />
                                 </article>
                             )
                         }) : (

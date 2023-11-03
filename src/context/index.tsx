@@ -10,8 +10,8 @@ type GlobalContextValue = {
     setShowNavModal: React.Dispatch<React.SetStateAction<boolean>>;
     isAuth: boolean;
     setIsAuth: React.Dispatch<React.SetStateAction<boolean>>;
-    coverArt: Relationship[];
-    setcoverArt: React.Dispatch<React.SetStateAction<Relationship[]>>;
+    coverArt: Array<string>;
+    setcoverArt: React.Dispatch<React.SetStateAction<Array<string>>>;
 }
 
 export const GlobalContext = createContext<GlobalContextValue | null>(null)
@@ -21,7 +21,7 @@ export default function GlobalState({ children } : {children: React.ReactNode}) 
     const [showNavModal, setShowNavModal] = useState(false)
     const [isAuth, setIsAuth] = useState(false)
     const [user, setUser] = useState([])
-    const [coverArt, setcoverArt] = useState<Relationship[]>([])
+    const [coverArt, setcoverArt] = useState<Array<string>>([])
 
     const router = useRouter()
     const pathName = usePathname()

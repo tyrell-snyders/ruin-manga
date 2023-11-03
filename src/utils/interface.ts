@@ -1,5 +1,5 @@
 export interface Dta {
-    data: Array<object>,
+    data: Data[],
 }
 
 export interface TrendingItem {
@@ -13,4 +13,16 @@ export interface Relationship {
     type: string
 }
 
-
+export interface Data {
+    attributes: {
+        contentRating: string,
+        description: {
+            en: string
+        },
+        title: {
+            en: string
+        }
+    },
+    id: string,
+    relationships: Relationship
+}
