@@ -26,3 +26,17 @@ export interface Data {
     id: string,
     relationships: Relationship
 }
+
+export interface ArtData {
+    data: {
+        attributes: {
+            filename: string,
+            locale: string,
+            version: number,
+            volume: string,
+            id: string
+        },
+        relationships: Relationship[],
+        type: string
+    }
+}

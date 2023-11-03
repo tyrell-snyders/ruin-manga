@@ -36,9 +36,17 @@ export default function TrendingTile(props: any) {
     }
 
     useEffect(() => {
-        const art = async() => {
-            const cv = await getArt(coverArt)
+        if (coverArt != null || coverArt != undefined) {
             console.log(coverArt)
+        } 
+    }, [item])
+
+    useEffect(() => {
+        const art = async() => {
+            if (coverArt != null || coverArt != undefined) {
+                const cv = await getArt(coverArt)
+                console.log(cv)
+            } 
         }
         art()
     }, [item])
