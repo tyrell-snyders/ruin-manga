@@ -2,7 +2,7 @@
 
 import { GlobalContext } from "@/context"
 import { getCoverArt } from "@/services/comic/coverArt"
-import { Relationship } from "@/utils/interface"
+import { ArtData, Relationship } from "@/utils/interface"
 import { logger } from "@/utils/logger"
 import { useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
@@ -11,7 +11,8 @@ export default function TrendingTile(props: any) {
     // Context
     const context = useContext(GlobalContext)
 
-    const [cover, setCover] = useState<string>('')
+    const [mangId, setMangaId] = useState<string>('')
+    const [coverFileName, setCoverFileName] = useState<string>('')
 
     const router = useRouter()
     const { item, coverArt } = props
@@ -21,11 +22,14 @@ export default function TrendingTile(props: any) {
         return null;
     }
 
+    const { cover, setCover } = context
+
     const getArt = async(coverId: string) => {
         try {
-            const result = await getCoverArt(coverId)
-            if (result != null)
-                return result
+            const result = await getCoverArt(coverId);
+            if (result.data.data.attributes.fileName != undefined)
+                setCoverFileName(result.data.data.attributes.fileName)
+                // console.log(result.data.data.attributes.fileName)
             else
                 return 'No Data'
         } catch (e) {
@@ -36,29 +40,31 @@ export default function TrendingTile(props: any) {
     }
 
     useEffect(() => {
-        if (coverArt != null || coverArt != undefined) {
-            console.log(coverArt)
-        } 
-    }, [item])
+        if (coverArt) {
+            const art = async() => {
+                getArt(coverArt)
+            }
+            art()
+        }
+    }, [item]);
 
     useEffect(() => {
-        const art = async() => {
-            if (coverArt != null || coverArt != undefined) {
-                const cv = await getArt(coverArt)
-                console.log(cv)
-            } 
+        if (item?.id != null) {
+            setMangaId(item?.id)
         }
-        art()
     }, [item])
 
     return (
         <>
             <div onClick={() => router.push('/manga')}>
                 <div className="overflow-hidden aspect-w-1 aspect-h-1 h-52">
-                    <img
-                        src={`https://uploads.mangadex.org/covers/8f3e1818-a015-491d-bd81-3addc4d7d56a/26dd2770-d383-42e9-a42b-32765a4d99c8.png.256.jpg`} alt={item.slug}
-                        className="h-full w-full object-cover transition-all duration-300 group-hover:scale-125"
-                    />
+                    {
+                        coverFileName != null ? 
+                            <img
+                                src={`https://uploads.mangadex.org/covers/${mangId}/${coverFileName}.256.jpg`} alt={item.slug}
+                                className="h-full w-full object-cover transition-all duration-300 group-hover:scale-125"
+                            /> : null
+                    }
                 </div>
                 <div className="my-4 mx-auto flex w-10/12 flex-col items-start justify-between">
                     <h3 className='mb-2 text-gray-400 text-sm'>{item.attributes?.title?.en || item.attributes?.title?.ja}</h3>

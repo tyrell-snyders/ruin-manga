@@ -16,7 +16,6 @@ export default function Trending() {
 
     //Use State
     const [trendingData, setTrendingData] = useState<TrendingItem[]>([])
-    // const [trend, setTrend] = useState<any[]>([])
 
     if (context === null) {
         logger.error("No context")
@@ -24,7 +23,6 @@ export default function Trending() {
     }
 
     const { coverArt, setcoverArt } = context
-
     
     const getTrending = async () => {
         try {
