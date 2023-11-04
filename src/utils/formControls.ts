@@ -17,7 +17,7 @@ export const loginFromControls = [
 
 export const registrationFormControls = [
     {
-        id: 'name',
+        id: 'username',
         type: 'text',
         placeholder: 'Enter your name',
         label: 'Name',

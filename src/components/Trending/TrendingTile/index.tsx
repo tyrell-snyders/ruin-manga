@@ -50,7 +50,7 @@ export default function TrendingTile(props: any) {
         }
     }, [item]);
 
-    
+     
     return (
         <>
             <div onClick={() => router.push('/manga')}>
