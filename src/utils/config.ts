@@ -6,7 +6,7 @@ const schema = Type.Object({
         default: 3000
     }),
     HOST: Type.String({
-        default: '192.168.18.100'
+        default: 'localhost'
     })
 })
 
