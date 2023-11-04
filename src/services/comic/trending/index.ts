@@ -11,7 +11,8 @@ export const getTrendingComics = async() => {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type',
-            }
+            },
+            next: { revalidate: 3600 } //revalidate data every hour
         })
 
         const data = await res.json()

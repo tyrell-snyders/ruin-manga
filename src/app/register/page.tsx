@@ -80,7 +80,6 @@ export default function Register() {
                                                         ...formData,
                                                         [controlItem.id]: e.target.value
                                                     })}
-                                                    
                                                 }
                                             />
                                         )
