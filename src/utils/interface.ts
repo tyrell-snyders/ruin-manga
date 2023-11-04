@@ -40,3 +40,16 @@ export interface ArtData {
         type: string
     }
 }
+
+export interface User {
+    id: number,
+    username: string,
+    email: string,
+    password: string
+}
+
+export interface LoginResult {
+    user: User[],
+    token: string,
+    success: boolean
+}
