@@ -41,15 +41,15 @@ export interface ArtData {
     }
 }
 
-export interface User {
-    id: number,
-    username: string,
-    email: string,
-    password: string
-}
-
 export interface LoginResult {
-    user: User[],
+    user: [
+        {
+            id: number,
+            username: string,
+            email: string,
+            pass: string
+        }
+    ],
     token: string,
     success: boolean
 }
