@@ -1,36 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Ruin Manga Readme
 
-## Getting Started
+## Project Overview
 
-First, run the development server:
+Ruin Mang is an ambitious project that aims to provide a feature-rich and user-friendly platform for reading manga while also managing user accounts seamlessly. It leverages various technologies and microservices to achieve its goals.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Frontend Technology Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The frontend of Ruin Mang is built using TypeScript, Tailwind CSS, and Next.js. This modern and responsive web application offers an intuitive user interface for manga enthusiasts. It allows users to browse, search for, and read manga titles, all while offering a delightful user experience.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Backend Microservices
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### MangaData Microservice [ruinManga](https://github.com/tyrell-snyders/ruinManga)
 
-## Learn More
+- **Technology Stack:** Java Spring Boot
+- **Purpose:** This microservice is responsible for fetching manga data from the MangaDex API. It acts as a bridge between the frontend and the external MangaDex API, providing a standardized and optimized interface for retrieving manga content. This microservice ensures that users can access the latest manga titles, summaries, and other metadata efficiently.
 
-To learn more about Next.js, take a look at the following resources:
+### User Management Microservice [rnManga-fastify](https://github.com/tyrell-snyders/rnManha-fastify)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Technology Stack:** TypeScript, Fastify, Swagger, MySQL
+- **Purpose:** The User Management Microservice is designed to handle user-related operations. It allows users to create accounts, log in, manage their profiles, and perform other essential actions. It leverages TypeScript for type safety, Fastify for efficient API routing, Swagger for clear API documentation, and MySQL for robust data storage. This microservice ensures user data privacy, security, and a seamless registration and login process.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Key Features
 
-## Deploy on Vercel
+- **Manga Search:** Users can search for manga titles based on various criteria, such as genre, author, or title keywords.
+- **Reading Experience:** The platform provides a reader-friendly interface for manga viewing, supporting smooth scrolling and user-customizable settings.
+- **User Registration and Authentication:** Users can create accounts, log in, and securely manage their profiles.
+- **Favorites and Bookmarks:** Users can mark their favorite manga titles and bookmark specific pages for quick access.
+- **Social Features:** Users can rate and review manga titles, share recommendations, and engage with a community of manga enthusiasts.
+- **User Dashboard:** Users can access their reading history, preferences, and account settings in a centralized dashboard.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Project Scope
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Ruin Mang will focus on manga reading and user management in its initial phase. Future enhancements may include personalized recommendations, user-generated content, and additional integrations with external manga sources.
