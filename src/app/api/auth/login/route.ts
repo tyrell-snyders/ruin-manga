@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { logger } from "@/utils/logger"
-import { NextApiRequest, NextApiResponse } from "next"
+import {  NextApiRequest, NextApiResponse } from "next"
 
 export const dynamic = 'force-dynamic'
 
@@ -10,10 +10,11 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
         try {
             // Read the request body as a string
-            const requestBody = await req.text();
+            const requestBody = await req.text()
             // Parse the string as JSON
-            const body = JSON.parse(requestBody);
-            const response = await fetch(`${baseUrl}/api/auth/register`, {
+            const body = JSON.parse(requestBody)
+
+            const response = await fetch(`${baseUrl}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
@@ -24,14 +25,17 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
                 body: JSON.stringify(body)
             })
 
-            if (response.ok) {
-                await response.json()
+            if (response.status === 200) {
+                const data = await response.json()
                 return NextResponse.json({
+                    data,
                     message: 'Successfully registered.',
                     success: true
                 })
             } else {
-                return res.status(500).json({ message: 'Failed to register user.', success: false })
+                return NextResponse.json({
+                    message: 'Failed to register user.', success: false
+                })
             }
         } catch (e) {
             if (e instanceof Error) {
@@ -43,6 +47,6 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
             }
         }
     } else {
-        res.status(405).end()
+        return res.status(405).end()
     }
 }

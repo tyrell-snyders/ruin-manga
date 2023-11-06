@@ -7,7 +7,7 @@ export const loginFromControls = [
         componnentType: 'input'
     },
     {
-        id: 'password',
+        id: 'pass',
         type: 'password',
         placeholder: 'Enter your password',
         label: 'Password',

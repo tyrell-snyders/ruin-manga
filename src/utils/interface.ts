@@ -66,7 +66,7 @@ export interface Users {
 
 export interface LoginForm {
     username: string,
-    password: string
+    pass: string
 }
 
 export interface RegisterForm {

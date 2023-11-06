@@ -36,7 +36,7 @@ export default function Register() {
         try {
             const res = await registerUser(formData)
             if (res?.success)
-                console.log(res)
+                router.push('/login')
         } catch (error) {
             if (error instanceof Error) {
                 console.log(error)

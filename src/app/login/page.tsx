@@ -6,12 +6,14 @@ import { useContext, useEffect, useState } from "react"
 import { GlobalContext } from "@/context"
 import Cookies from "js-cookie"
 import InputComponent from "@/components/FormElements"
-import { FormData } from "@/utils/interface"
+import { LoginForm } from "@/utils/interface"
+import { logger } from "@/utils/logger"
+import { loginUser } from "@/services/auth/login"
 
 
-const initForm: FormData = {
+const initForm: LoginForm = {
     username: '',
-    password: ''
+    pass: ''
 }
 
 const styles = {
@@ -33,14 +35,21 @@ export default function Login() {
 
     const isValid = () => {
         return formData && formData.username && formData.username.trim() !== '' 
-            && formData.password && formData.password.trim() !== '' 
+            && formData.pass && formData.pass.trim() !== '' 
                 ? true : false
     }
 
     const handleLogin = async() => {
-
+        try {
+            const res = await loginUser(formData)
+            if (res?.success) {
+                console.log(res)
+            }
+        } catch (e) {
+            if (e instanceof Error)
+                logger.error(e.message)
+        }
     }
-
 
     return (
         <div className="max-h-screen">
@@ -59,7 +68,7 @@ export default function Login() {
                                                 type={controlItem.type}
                                                 placeholder={controlItem.placeholder}
                                                 label={controlItem.label} 
-                                                value={formData[controlItem.id as keyof FormData]}
+                                                value={formData[controlItem.id as keyof LoginForm]}
                                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                                     setFormData({
                                                         ...formData,
