@@ -64,7 +64,13 @@ export interface Users {
     success: boolean
 }
 
-export interface FormData {
+export interface LoginForm {
     username: string,
     password: string
+}
+
+export interface RegisterForm {
+    username: string,
+    email: string,
+    pass: string
 }

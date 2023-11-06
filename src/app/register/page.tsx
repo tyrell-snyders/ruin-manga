@@ -5,12 +5,8 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import InputComponent from "@/components/FormElements"
 import { logger } from '@/utils/logger'
-
-interface FormData {
-    username: string,
-    email: string,
-    password: string
-}
+import { registerUser } from '@/services/auth/register'
+import { RegisterForm } from '@/utils/interface'
 
 const styles = {
     button: `disabled:opacity-50 inline-flex w-full items-center justify-center bg-purple-600 
@@ -18,27 +14,34 @@ const styles = {
             ease-in-out focus:shadow font-medium uppercase tracking-wide rounded-3xl`
 }
 
-const initForm: FormData = {
+const initForm: RegisterForm = {
     username: '',
     email: '',
-    password: ''
+    pass: ''
 }
 
 export default function Register() {
-
     const router = useRouter()
 
     const [formData, setFormData] = useState(initForm)
 
     const isValid = () => {
         return formData && formData.username && formData.username.trim() !== '' 
-            && formData.password && formData.password.trim() !== ''
+            && formData.pass && formData.pass.trim() !== ''
             && formData.email && formData.email.trim() !== ''
                 ? true : false
     }
 
     const handleRegister = async() => {
-        console.log(formData)
+        try {
+            const res = await registerUser(formData)
+            if (res?.success)
+                console.log(res)
+        } catch (error) {
+            if (error instanceof Error) {
+                console.log(error)
+            }
+        }
     }
 
     return (
@@ -61,7 +64,7 @@ export default function Register() {
                                                 type={controlItem.type}
                                                 placeholder={controlItem.placeholder}
                                                 label={controlItem.label} 
-                                                value={formData[controlItem.id as keyof FormData]}
+                                                value={formData[controlItem.id as keyof RegisterForm]}
                                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                                     setFormData({
                                                         ...formData,

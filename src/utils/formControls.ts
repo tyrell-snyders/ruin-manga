@@ -31,7 +31,7 @@ export const registrationFormControls = [
         componnentType: 'input'
     },
     {
-        id: 'password',
+        id: 'pass',
         type: 'password',
         placeholder: 'Enter your password',
         label: 'Password',
