@@ -2,11 +2,11 @@
 
 ## Project Overview
 
-Ruin Mang is an ambitious project that aims to provide a feature-rich and user-friendly platform for reading manga while also managing user accounts seamlessly. It leverages various technologies and microservices to achieve its goals.
+Ruin Manga is an ambitious project that aims to provide a feature-rich and user-friendly platform for reading manga while also managing user accounts seamlessly. It leverages various technologies and microservices to achieve its goals.
 
 ## Frontend Technology Stack
 
-The frontend of Ruin Mang is built using TypeScript, Tailwind CSS, and Next.js. This modern and responsive web application offers an intuitive user interface for manga enthusiasts. It allows users to browse, search for, and read manga titles, all while offering a delightful user experience.
+The frontend of Ruin Manga is built using TypeScript, Tailwind CSS, and Next.js. This modern and responsive web application offers an intuitive user interface for manga enthusiasts. It allows users to browse, search for, and read manga titles, all while offering a delightful user experience.
 
 ## Backend Microservices
 
@@ -31,4 +31,4 @@ The frontend of Ruin Mang is built using TypeScript, Tailwind CSS, and Next.js. 
 
 ## Project Scope
 
-Ruin Mang will focus on manga reading and user management in its initial phase. Future enhancements may include personalized recommendations, user-generated content, and additional integrations with external manga sources.
+Ruin Manga will focus on manga reading and user management in its initial phase. Future enhancements may include personalized recommendations, user-generated content, and additional integrations with external manga sources.
