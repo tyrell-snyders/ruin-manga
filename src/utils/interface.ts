@@ -53,3 +53,18 @@ export interface LoginResult {
     token: string,
     success: boolean
 }
+
+export interface User {
+    username: string,
+    email: string
+}
+
+export interface Users {
+    users: User[],
+    success: boolean
+}
+
+export interface FormData {
+    username: string,
+    password: string
+}

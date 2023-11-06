@@ -6,11 +6,8 @@ import { useContext, useEffect, useState } from "react"
 import { GlobalContext } from "@/context"
 import Cookies from "js-cookie"
 import InputComponent from "@/components/FormElements"
+import { FormData } from "@/utils/interface"
 
-interface FormData {
-    username: string;
-    password: string;
-}
 
 const initForm: FormData = {
     username: '',
