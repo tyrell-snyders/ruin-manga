@@ -31,14 +31,15 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
                     success: true
                 })
             } else {
-                return res.status(500).json({ message: 'Failed to register user.', success: false })
+                return new NextResponse('User registration failed.', {
+                    status: 400
+                })
             }
         } catch (e) {
             if (e instanceof Error) {
                 logger.error(`Error: ${e.stack}`)
-                return NextResponse.json({
-                    message: e.message,
-                    success: false
+                return new NextResponse('Internal Server Error', {
+                    status: 500
                 })
             }
         }
