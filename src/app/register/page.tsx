@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import InputComponent from "@/components/FormElements"
 import { logger } from '@/utils/logger'
-import { registerUser } from '@/services/auth/register'
+import { registerUser } from '@/services/auth/register/index.service'
 import { RegisterForm } from '@/utils/interface'
 
 const styles = {

@@ -8,7 +8,7 @@ import Cookies from "js-cookie"
 import InputComponent from "@/components/FormElements"
 import { LoginForm } from "@/utils/interface"
 import { logger } from "@/utils/logger"
-import { loginUser } from "@/services/auth/login"
+import { loginUser } from "@/services/auth/login/index.service"
 
 
 const initForm: LoginForm = {
