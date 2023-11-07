@@ -33,20 +33,21 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
                     success: true
                 })
             } else {
-                return NextResponse.json({
-                    message: 'Failed to register user.', success: false
+                return new NextResponse('Failed to log in! No user found with provided credentials.', {
+                    status: 404
                 })
             }
         } catch (e) {
             if (e instanceof Error) {
-                logger.error(`Error: ${e.stack}`)
-                return NextResponse.json({
-                    message: e.message,
-                    success: false
+                logger.error(`Error: ${e.message}`)
+                return new NextResponse( 'Internal Server error', {
+                    status: 500
                 })
             }
         }
     } else {
-        return res.status(405).end()
+        return new NextResponse('Not Allowed', {
+            status: 405
+        })
     }
 }
