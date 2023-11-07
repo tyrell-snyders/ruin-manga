@@ -41,19 +41,6 @@ export interface ArtData {
     }
 }
 
-export interface LoginResult {
-    user: [
-        {
-            id: number,
-            username: string,
-            email: string,
-            pass: string
-        }
-    ],
-    token: string,
-    success: boolean
-}
-
 export interface User {
     username: string,
     email: string

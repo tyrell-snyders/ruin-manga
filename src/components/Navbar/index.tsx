@@ -7,6 +7,7 @@ import { useRouter, usePathname } from "next/navigation"
 import CommonModal from "../CommonModal"
 import { GlobalContext } from "@/context"
 import { logger } from "@/utils/logger"
+import Cookies from "js-cookie"
 
 function NavItems(props: any) {
     const {
@@ -47,10 +48,16 @@ export default function Navbar() {
         return null;
     }
 
-    const { showNavModal, setShowNavModal } = context;
+    const { showNavModal, setShowNavModal, isAuth, setIsAuth } = context;
 
     const pathName = usePathname()
     const router = useRouter()
+
+    const handleLogout = () => {
+        localStorage.removeItem('user')
+        Cookies.remove('token')
+        setIsAuth(false)
+    }
 
     return (
         <nav className='bg-gray-700 fixed w-full z-20 top-0 border-b border-white'>
@@ -64,7 +71,9 @@ export default function Navbar() {
                     </span>
                 </div>
                 <div className="flex flex-row md:order-2 gap-4">
-                    <Link href="/login">LogIn</Link>                    
+                    {
+                        isAuth ? <Link href="/" onClick={handleLogout}>LogOut</Link> : <Link href="/login">Login</Link>
+                    }                    
                 </div>
                 <button data-collapse-toggle='navbar-sticky' type='button'
                     className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100
