@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react"
 import { GlobalContext } from "@/context"
 import Cookies from "js-cookie"
 import InputComponent from "@/components/FormElements"
-import { LoginForm } from "@/utils/interface"
+import { LoginForm, User } from "@/utils/interface"
 import { logger } from "@/utils/logger"
 import { loginUser } from "@/services/auth/login/index.service"
 
@@ -25,9 +25,16 @@ const styles = {
 export default function Login() {
     const context = useContext(GlobalContext)
 
+    if (context === null) {
+        logger.error("No context")
+        return null;
+    }
+
+    const { user, setUser, isAuth, setIsAuth } = context
+
     useEffect(() => {
-        if (context?.isAuth) router.push('/')
-    }, [context?.isAuth])
+        if (isAuth) router.push('/')
+    }, [isAuth])
 
     const router = useRouter()
 
@@ -43,7 +50,20 @@ export default function Login() {
         try {
             const res = await loginUser(formData)
             if (res?.success) {
-                console.log(res)
+                const userData =  {
+                    username: res?.data.user[0].username,
+                    email: res?.data.user[0].email
+                } as User
+                setUser(userData)
+                
+                //Create user session with cookies
+                Cookies.set('token', res?.data.token)
+
+                //Add user data to local storage
+                localStorage.setItem('user', JSON.stringify(userData))
+
+                //Indicate that the user is authorized
+                setIsAuth(true)
             }
         } catch (e) {
             if (e instanceof Error)
