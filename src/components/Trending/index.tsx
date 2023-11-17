@@ -1,13 +1,11 @@
 'use client'
 
-import { useState, useContext, useEffect, Dispatch, SetStateAction } from 'react'
-import { useRouter, usePathname } from "next/navigation"
+import { useState, useContext, useEffect } from 'react'
 import { GlobalContext } from "@/context"
 import { logger } from "@/utils/logger"
-import dynamic from 'next/dynamic'
 import TrendingTile from './TrendingTile'
 import { getTrendingComics } from '@/services/comic/trending'
-import { Relationship, TrendingItem } from '@/utils/interface'
+import { TrendingItem } from '@/utils/interface'
 
 
 export default function Trending() {

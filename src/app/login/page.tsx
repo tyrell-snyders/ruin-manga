@@ -4,12 +4,11 @@ import { loginFromControls } from "@/utils/formControls"
 import { useRouter } from "next/navigation"
 import { useContext, useEffect, useState } from "react"
 import { GlobalContext } from "@/context"
-import Cookies from "js-cookie"
 import InputComponent from "@/components/FormElements"
 import { LoginForm, User } from "@/utils/interface"
 import { logger } from "@/utils/logger"
 import { loginUser } from "@/services/auth/login/index.service"
-
+import { cookies } from 'next/headers'
 
 const initForm: LoginForm = {
     username: '',
@@ -57,7 +56,7 @@ export default function Login() {
                 setUser(userData)
                 
                 //Create user session with cookies
-                Cookies.set('token', res?.data.token)
+                cookies().set('token', res?.data.token)
 
                 //Add user data to local storage
                 localStorage.setItem('user', JSON.stringify(userData))
