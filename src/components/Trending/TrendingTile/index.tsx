@@ -18,7 +18,6 @@ export default function TrendingTile(props: any) {
         return null;
     }
 
-    const { mangaId, setMangaId } = context
     const [id, setId] = useState<string>('')
 
     const router = useRouter()
@@ -49,8 +48,6 @@ export default function TrendingTile(props: any) {
             }
         }
     }, [item]);
-
-    console.log(item?.id)
 
      
     return (
