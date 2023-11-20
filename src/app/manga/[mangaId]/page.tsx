@@ -1,5 +1,6 @@
 'use client'
 
+import Chapters from "@/components/Chapters/Chapters"
 import CoverArt from "@/components/CoverArt/CoverArt"
 import { GlobalContext } from "@/context"
 import { getMangaData } from "@/services/comic/manga"
@@ -19,7 +20,7 @@ export default function MangaPage({ params }) {
             <h1>Internal Server Error</h1>
         )
 
-    const { mangaId, setMangaId } = context
+    const { setMangaId } = context
 
     const handleManga = async(mangaId: string) => {
         try {
@@ -59,15 +60,26 @@ export default function MangaPage({ params }) {
         callManga()
     }, [params])
 
-
     return (
         <div className='flex min-h-screen min-w-screen flex-col justify-between p-24 sm:p-1 mt-24 ml-10'>
             <div className="flex flex-col justify-space-around border border-gray-500 rounded-md mr-20">
-                {/* Cover Image */}
-                <CoverArt coverId={handleRelationship()} />
-                <div className="flex">
-                    hi
+               <div className="flex flex-row p-10 mb-2">
+                    {/* Cover Image */}
+                    <CoverArt coverId={handleRelationship()} />
+                    <h1 className="ml-20 font-bold text-xl">
+                        {manga?.data.attributes.title.en}
+                    </h1>
                 </div>
+                {/* Descritpion */}
+                <div className="flex flex-col m-14">
+                    <h1 className='text-lg font-bold'>Description</h1>
+                    <p className="text-sm">{manga?.data.attributes.description.en}</p>
+                </div>
+            </div>
+            <hr className="mr-20" />
+            {/* Chapters */}
+            <div className="flex-col mb-10 ml-4">
+                <Chapters />
             </div>
         </div>
     )
