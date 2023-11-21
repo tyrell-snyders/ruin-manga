@@ -25,3 +25,15 @@ export type Manga = {
         relationships: Relationship[]
     }
 }
+
+export type Volume = {
+    result: string;
+    volumes: object;
+}
+
+export type Chapter = {
+    chapter: string;
+    count: number;
+    id: string;
+    others: Array<string>;
+}

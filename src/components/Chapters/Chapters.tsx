@@ -3,6 +3,7 @@
 import { GlobalContext } from "@/context"
 import { useState, useEffect, useContext } from "react"
 import handleChapters from "."
+import { Chapter, Volume } from "@/utils/types"
 
 export default function Chapters() {
     //Context
@@ -16,12 +17,13 @@ export default function Chapters() {
     const { mangaId } = context
 
     //Use State Hooks
-    const [chapters, setChapters] = useState()
+    const [results, setResults] = useState<Volume>()
+    const [chapters, setChapters] = useState<Chapter[]>([])
 
     const handleChapters_Volumes = async() => {
         const chpt = await handleChapters(mangaId)
-        if (chpt != null)
-            setChapters(chpt)
+        if (chpt != null || chpt == 'No Chapters Available.')
+            setResults(chpt)
     }
 
     useEffect(() => {
@@ -32,20 +34,41 @@ export default function Chapters() {
         callChapters()
     }, [mangaId])
 
-
     useEffect(() => {
-        if (chapters == 'No Chapters Available')
-            return (
-                <div>{chapters}</div>
-            )
-    }, [chapters])
-
-
-    console.log(chapters)
+        if (results != null || results != undefined) {
+            if (results.volumes != null || undefined) {
+                const volumeKeys = Object.keys(results.volumes);
+                // Loop through the volume keys
+                volumeKeys.forEach((volumeKey) => {
+                    const volume = results.volumes[volumeKey];
+                    if (volume.chapters != null || undefined) {
+                        const chapterKeys = Object.keys(volume.chapters);
+                        //Loop through the chapter keys
+                        const volumeChapters = chapterKeys.map((chapterKey) => {
+                            const chapter = volume.chapters[chapterKey];
+                            return chapter as Chapter;
+                        });
+                        // Store the chapters in a state array
+                        setChapters((prevChapters) => [...prevChapters, ...volumeChapters]);
+                    }
+                });
+            }
+        }
+    }, [results])
 
     return (
         <section>
             <h1>Chapters</h1>
+            {
+                chapters && chapters.length ? 
+                chapters.map((item: Chapter, i: number) => {
+                    return (
+                        <div className='flex flex-col justify-center items-center mt-6'>
+                            Chapter {item.chapter}
+                        </div>
+                    )
+                }) :  <h1>No Chapters Available</h1>
+            }
         </section>
     )
 }
