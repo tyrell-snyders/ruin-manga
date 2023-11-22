@@ -61,24 +61,25 @@ export default function MangaPage({ params }) {
     }, [params])
 
     return (
-        <div className='flex min-h-screen min-w-screen flex-col justify-between p-24 sm:p-1 mt-24 ml-10'>
-            <div className="flex flex-col justify-space-around border border-gray-500 rounded-md mr-20">
+        <div className='flex min-h-screen min-w-screen flex-col justify-center items-center p-24 sm:p-1 mt-24 ml-10 mr-10'>
+            <div className="flex flex-col justify-space-around ">
                <div className="flex flex-row p-10 mb-2">
                     {/* Cover Image */}
-                    <CoverArt coverId={handleRelationship()} />
-                    <h1 className="ml-20 font-bold text-xl">
-                        {manga?.data.attributes.title.en}
-                    </h1>
+                    <CoverArt coverId={handleRelationship()} className='mr-10' />
+                    <div>
+                        <h1 className="ml-20 font-bold text-xl">
+                            {manga?.data.attributes.title.en}
+                        </h1>
+                    </div>
                 </div>
                 {/* Descritpion */}
-                <div className="flex flex-col m-14">
+                <div className="m-10">
                     <h1 className='text-lg font-bold'>Description</h1>
-                    <p className="text-sm">{manga?.data.attributes.description.en}</p>
+                    <p className=" text-clip overflow-hidden sm-text-ellipsis">{manga?.data.attributes.description.en}</p>
                 </div>
             </div>
-            <hr className="mr-20" />
             {/* Chapters */}
-            <div className="flex-col mb-10 ml-4">
+            <div className="flex-col mt-10 mb-10 ml-4">
                 <Chapters />
             </div>
         </div>

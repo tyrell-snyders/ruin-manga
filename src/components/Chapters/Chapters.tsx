@@ -4,6 +4,7 @@ import { GlobalContext } from "@/context"
 import { useState, useEffect, useContext } from "react"
 import handleChapters from "."
 import { Chapter, Volume } from "@/utils/types"
+import Link from "next/link"
 
 export default function Chapters() {
     //Context
@@ -63,8 +64,8 @@ export default function Chapters() {
                 chapters && chapters.length ? 
                 chapters.map((item: Chapter, i: number) => {
                     return (
-                        <div className='flex flex-col justify-center items-center mt-6'>
-                            Chapter {item.chapter}
+                        <div className='flex flex-col mt-6 hover:border hover-border-gray-200 rounded-md p-2'>
+                            <Link href={`/manga/${mangaId}/${item.id}`}>Chapter {item.chapter}</Link>
                         </div>
                     )
                 }) :  <h1>No Chapters Available</h1>
