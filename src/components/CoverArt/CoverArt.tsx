@@ -1,0 +1,42 @@
+'use client'
+
+import { useContext, useEffect, useState } from "react";
+import handleCoverArt from ".";
+import { GlobalContext } from "@/context";
+
+export default function CoverArt(props: { coverId: string }) {
+    //context
+    const context = useContext(GlobalContext)
+    //useState hooks
+    const [coverFile, setCoverFile] = useState<string>('')
+
+    if (context == null)
+        return (
+            <h1>Internal Server Error</h1>
+        )
+
+    const { mangaId, setMangaId } = context
+
+    const coverId = props.coverId
+
+    //Call the handleCoverArt method and set the result to coverFile
+    useEffect(() => {
+        async function getArt() {
+            setCoverFile(await handleCoverArt(coverId))
+        }
+        getArt()
+    }, [coverId])
+
+    return (
+        <div>
+            {
+                coverFile != null ? 
+                <img
+                    src={`https://uploads.mangadex.org/covers/${mangaId}/${coverFile}.256.jpg`} alt='Hi'
+                    className="h-full w-full object-cover transition-all duration-300 group-hover:scale-125 w-60 h-90 rounded-md"
+                    loading="lazy"
+                /> : null
+            }
+        </div>
+    )
+}

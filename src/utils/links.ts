@@ -13,5 +13,10 @@ export const navOptions = [
         id: 'manhwa',
         label: 'Manhwa',
         path: '/manhwa'
+    },
+    {
+        id: 'search',
+        label: 'Search',
+        path: '/search'
     }
 ]

@@ -3,7 +3,7 @@ import { logger } from '@/utils/logger';
 
 export const dynamic = 'force-dynamic';
 
-const baseUrl = 'http://localhost:8080';
+const baseUrl = 'http://localhost:8081';
 
 export const GET = async () => {
     try {

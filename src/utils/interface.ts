@@ -41,9 +41,9 @@ export interface ArtData {
     }
 }
 
-export interface User {
-    username: string,
-    email: string
+export type User = {
+    username: string;
+    email: string;
 }
 
 export interface Users {

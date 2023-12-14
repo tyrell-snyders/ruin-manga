@@ -53,9 +53,6 @@ export default function GlobalState({ children } : {children: React.ReactNode}) 
             setIsAuth(true)
     }, [user])
 
-    useEffect(() => {
-    }, [isAuth])
-
     const router = useRouter()
     const pathName = usePathname()
 

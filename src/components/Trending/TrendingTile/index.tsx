@@ -18,7 +18,6 @@ export default function TrendingTile(props: any) {
         return null;
     }
 
-    const { mangaId, setMangaId } = context
     const [id, setId] = useState<string>('')
 
     const router = useRouter()
@@ -53,7 +52,7 @@ export default function TrendingTile(props: any) {
      
     return (
         <>
-            <div onClick={() => router.push('/manga')}>
+            <div onClick={() => router.push(`/manga/${item?.id}`)}>
                 <div className="overflow-hidden aspect-w-1 aspect-h-1 h-52">
                     {
                         coverFileName != null ? 

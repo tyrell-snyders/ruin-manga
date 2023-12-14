@@ -1,8 +1,7 @@
 import { logger } from '@/utils/logger';
-import type { NextApiRequest, NextApiResponse } from 'next'
 import { NextResponse, NextRequest } from 'next/server';
 
-const url = 'http://localhost:8080/api/v1/comic/manga/coverArt'
+const url = 'http://localhost:8081/api/v1/comic/manga/coverArt'
 // const baseUrl = 'http://localhost:8080';
 
 export const dynamic = 'force-dynamic';
