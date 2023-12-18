@@ -22,17 +22,11 @@ export default function Search() {
         return null;
     }
 
-    const { coverArt, setcoverArt } = context
-
     //Handle the search
     const handleSearch = async() => {
-
+        
     }
-
-    console.log(coverArt)
-
-
-
+    
     return (
         <section className='max-h-screen'>
             <div className={styles.container}>
