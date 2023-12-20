@@ -37,3 +37,7 @@ export type Chapter = {
     id: string;
     others: Array<string>;
 }
+
+export type SearchResults = {
+    data: Manga[]
+}
