@@ -5,7 +5,7 @@ import { logger } from '@/utils/logger'
 import { GlobalContext } from '@/context'
 import SrchResults from '@/components/Search/SearchResults'
 import handleSrch from '@/components/Search'
-import { SearchResults } from "@/utils/types"
+import { Manga, Mng, SearchResults } from "@/utils/types"
 import { searchFormControl } from '@/utils/formControls'
 import InputComponent from '@/components/FormElements'
 
@@ -27,6 +27,7 @@ export default function Search() {
     //useState
     const [searchResult, setSearchResult] = useState<SearchResults>()
     const [title, setTitle] = useState('')
+    const [coverArt, setCoverArt] = useState<string[]>([''])
 
     if (context === (null || undefined)) {
         logger.error("No context")
@@ -54,6 +55,26 @@ export default function Search() {
             }
         }
     }
+
+    //Map through the results object and filter it by the realtionship type and id
+    const handleRelationship = () => {
+        // Extract IDs with type 'cover_art'
+        const coverId = searchResult?.data
+            ?.map((r) => r.relationships)
+            .flat()
+            .filter((relationship) => relationship.type === 'cover_art')
+            .map((relationship) => relationship.id);
+
+        return coverId; // Return an empty string if coverId is undefined or empty
+    }
+
+    useEffect(() => {
+        setCoverArt(handleRelationship())
+        async function getSrc() {
+            await handleSearch()
+        }
+        getSrc()
+    }, [title])
 
     return (
         <section className='max-h-screen'>

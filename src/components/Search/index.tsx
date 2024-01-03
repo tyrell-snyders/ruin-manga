@@ -6,7 +6,7 @@ import { logger } from "@/utils/logger"
 const handleSrch = async(title: string) => {
     try {
         const result = await search(title)
-        if (result?.data) 
+        if (result?.data)
             return result
         else
             return `No manga/manhwa with title: ${title} found.`
