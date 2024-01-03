@@ -1,24 +1,25 @@
 'use client'
 
 import { Manga, Mng, SearchResults } from "@/utils/types"
-import handleSrch from "."
 import Link from "next/link"
 import { useState, useEffect, useContext } from "react"
-import { logger } from '@/utils/logger'
 import CoverArt from "../CoverArt/CoverArt"
 
 const styles = {
     grid: 'mt-8 grid gap-6 lg:grid-cols-4 sm:gap-4 md:grid-cols-2'
 }
 
-export default function SrchResults(props: {srchResults: SearchResults, coverId: string}) {
+export default function SrchResults(props: {srchResults: SearchResults, coverId: string, coverArt: string[]}) {
     //hooks
     const [results, setResults] = useState<Mng[]>([])
-    const [mangaId, setMangaId] = useState<string>('')
+    const [coverArt, setCoverArt] = useState<string[]>([])
 
     useEffect(() => {
+        //Initialize useState values everytime the props are changed
         setResults(props.srchResults?.data)
+        setCoverArt(props.coverArt)
     }, [props])
+
 
 
     return (
@@ -26,11 +27,12 @@ export default function SrchResults(props: {srchResults: SearchResults, coverId:
             <h2>Search Results</h2>
             <div className={styles.grid}>
                 {
-                    results && results.length ?
-                    results.map(res => (
+                    results && results.length && 
+                    coverArt && coverArt.length ?
+                    results.map((res, i) => (
                         <div>
                             <h4 key={res.id}>{res.attributes.title.en}</h4>
-                            <CoverArt coverId={coverArt} />
+                            <CoverArt mngId={res.id} coverId={coverArt[i]} />
                         </div>
                     )) : 'No results found'
                 }

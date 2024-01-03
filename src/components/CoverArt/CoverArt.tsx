@@ -4,11 +4,12 @@ import { useContext, useEffect, useState } from "react";
 import handleCoverArt from ".";
 import { GlobalContext } from "@/context";
 
-export default function CoverArt(props: { coverId: string }) {
+export default function CoverArt(props: { coverId: string, mngId: string }) {
     //context
     const context = useContext(GlobalContext)
     //useState hooks
     const [coverFile, setCoverFile] = useState<string>('')
+    const [mngId, setMngId] = useState<string>('')
 
     if (context == null)
         return (
@@ -25,14 +26,17 @@ export default function CoverArt(props: { coverId: string }) {
             setCoverFile(await handleCoverArt(coverId))
         }
         getArt()
+        if (props.mngId != undefined)
+            setMngId(props.mngId)
     }, [coverId])
+
 
     return (
         <div>
             {
                 coverFile != null ? 
                 <img
-                    src={`https://uploads.mangadex.org/covers/${mangaId}/${coverFile}.256.jpg`} alt='Hi'
+                    src={`https://uploads.mangadex.org/covers/${mangaId || mngId}/${coverFile}.256.jpg`} alt='Hi'
                     className="h-full w-full object-cover transition-all duration-300 group-hover:scale-125 w-60 h-90 rounded-md"
                     loading="lazy"
                 /> : null

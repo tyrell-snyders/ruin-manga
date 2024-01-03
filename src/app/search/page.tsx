@@ -5,7 +5,7 @@ import { logger } from '@/utils/logger'
 import { GlobalContext } from '@/context'
 import SrchResults from '@/components/Search/SearchResults'
 import handleSrch from '@/components/Search'
-import { Manga, Mng, SearchResults } from "@/utils/types"
+import { SearchResults } from "@/utils/types"
 import { searchFormControl } from '@/utils/formControls'
 import InputComponent from '@/components/FormElements'
 
@@ -65,11 +65,12 @@ export default function Search() {
             .filter((relationship) => relationship.type === 'cover_art')
             .map((relationship) => relationship.id);
 
-        return coverId; // Return an empty string if coverId is undefined or empty
+        return coverId as string[];
     }
 
+    //Set the cover art and call the search function
     useEffect(() => {
-        setCoverArt(handleRelationship())
+        setCoverArt(handleRelationship() as string[])
         async function getSrc() {
             await handleSearch()
         }
@@ -104,7 +105,7 @@ export default function Search() {
             <div className={styles.srcRes}>
                 <div className="bg-gray-700 rounded-lg mt-20 mb-10 sm:py-16 border border-gray-200">
                     <div className="mx-4 my-10 px-4 sm:px-6">
-                        <SrchResults srchResults={searchResult as SearchResults}/>
+                        <SrchResults coverArt={coverArt} coverId={""} srchResults={searchResult as SearchResults}/>
                     </div>
                 </div>
             </div>
