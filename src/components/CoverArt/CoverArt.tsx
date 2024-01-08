@@ -16,7 +16,7 @@ export default function CoverArt(props: { coverId: string, mngId: string }) {
             <h1>Internal Server Error</h1>
         )
 
-    const { mangaId, setMangaId } = context
+    const { mangaId } = context
 
     const coverId = props.coverId
 
