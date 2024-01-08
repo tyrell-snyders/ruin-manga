@@ -64,7 +64,7 @@ export default function Chapters() {
                 chapters && chapters.length ? 
                 chapters.map((item: Chapter, i: number) => {
                     return (
-                        <div className='flex flex-col mt-6 hover:border hover-border-gray-200 rounded-md p-2'>
+                        <div key={i} className='flex flex-col mt-6 hover:border hover-border-gray-200 rounded-md p-2'>
                             <Link href={`/manga/${mangaId}/${item.id}`}>Chapter {item.chapter}</Link>
                         </div>
                     )

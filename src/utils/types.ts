@@ -37,3 +37,30 @@ export type Chapter = {
     id: string;
     others: Array<string>;
 }
+
+export type Mng = {
+    id: string;
+    type: string;
+    attributes: {
+        title: {
+            en: string;
+        };
+        description: {
+            en: string;
+        };
+        originalLanguage: string;
+        status: string;
+        year: string;
+        contentRating: string;
+        state: "published";
+        createdAt: string;
+        updatedAt: string;
+        version: number;
+        latestUploadedChapter: string;
+    };
+    relationships: Relationship[]
+}
+
+export type SearchResults = {
+    data: Mng[]
+}

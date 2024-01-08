@@ -38,3 +38,13 @@ export const registrationFormControls = [
         componnentType: 'input'
     }
 ]
+
+export const searchFormControl = [
+    {
+        id: 'search',
+        type: 'text',
+        placeholder: 'Search',
+        label: 'Search',
+        componentType: 'input'
+    }
+]
