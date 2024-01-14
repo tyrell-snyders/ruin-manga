@@ -2,6 +2,7 @@
 
 import Chapters from "@/components/Chapters/Chapters"
 import CoverArt from "@/components/CoverArt/CoverArt"
+import FavouritesButton from "@/components/Favourites/FavouritesButton"
 import { GlobalContext } from "@/context"
 import { getMangaData } from "@/services/comic/manga"
 import { logger } from "@/utils/logger"
@@ -14,13 +15,14 @@ export default function MangaPage({ params }) {
 
     //useState hooks
     const [manga, setManga] = useState<Manga>()
+    const [mangaName, setMangaName] = useState<string>('')
 
     if (context == null)
         return (
             <h1>Internal Server Error</h1>
         )
 
-    const { setMangaId } = context
+    const { mangaId, setMangaId } = context
 
     const handleManga = async(mangaId: string) => {
         try {
@@ -32,6 +34,8 @@ export default function MangaPage({ params }) {
                 setManga(mngData)
                 //set the id of the manga
                 setMangaId(mngData.data.id)
+                //set the name of the manga
+                setMangaName(mngData.data.attributes.title.en)
             }
             else
                 logger.error(`Could not find any manga data.`)
@@ -70,6 +74,9 @@ export default function MangaPage({ params }) {
                         <h1 className="ml-20 font-bold text-xl">
                             {manga?.data.attributes.title.en}
                         </h1>
+                        <div className="ml-20 mt-10">
+                            <FavouritesButton mngId={mangaId} mngName={mangaName} />
+                        </div>
                     </div>
                 </div>
                 {/* Descritpion */}

@@ -61,3 +61,9 @@ export interface RegisterForm {
     email: string,
     pass: string
 }
+
+export interface FavouritesData {
+    userName: string,
+    comicID: string,
+    comicTitle: string
+}

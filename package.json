@@ -18,9 +18,10 @@
         "@types/js-cookie": "^3.0.4",
         "env-schema": "^5.2.0",
         "js-cookie": "^3.0.5",
-        "next": "latest",
+        "next": "^14.0.4",
         "pino": "^8.15.1",
         "react": "latest",
+        "react-cookie": "^7.0.1",
         "react-dom": "latest"
     },
     "devDependencies": {
