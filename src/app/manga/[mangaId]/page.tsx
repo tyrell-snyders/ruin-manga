@@ -2,12 +2,19 @@
 
 import Chapters from "@/components/Chapters/Chapters"
 import CoverArt from "@/components/CoverArt/CoverArt"
-import FavouritesButton from "@/components/Favourites/FavouritesButton"
+import handleAddFavourites from "@/components/Favourites"
 import { GlobalContext } from "@/context"
 import { getMangaData } from "@/services/comic/manga"
+import { FavouritesData } from "@/utils/interface"
 import { logger } from "@/utils/logger"
 import { Manga } from "@/utils/types"
 import { useState, useContext, useEffect } from "react"
+
+const styles = {
+    button: `disabled:opacity-50 inline-flex items-center justify-center bg-purple-600 
+            px-6 py-4 text-lg text-white transition-all duration-200 
+            ease-in-out focus:shadow font-medium uppercase tracking-wide rounded-3xl`
+}
 
 export default function MangaPage({ params }) {
     //context
@@ -16,13 +23,16 @@ export default function MangaPage({ params }) {
     //useState hooks
     const [manga, setManga] = useState<Manga>()
     const [mangaName, setMangaName] = useState<string>('')
+    const [mngId, setMngId] = useState<string>('')
+    const [favourite, setFavourite] = useState<FavouritesData>({} as FavouritesData)
 
     if (context == null)
         return (
             <h1>Internal Server Error</h1>
         )
 
-    const { mangaId, setMangaId } = context
+    const { mangaId, setMangaId, user } = context
+
 
     const handleManga = async(mangaId: string) => {
         try {
@@ -33,9 +43,7 @@ export default function MangaPage({ params }) {
                 //set the manga
                 setManga(mngData)
                 //set the id of the manga
-                setMangaId(mngData.data.id)
-                //set the name of the manga
-                setMangaName(mngData.data.attributes.title.en)
+                setMangaId(mngData?.data.id)
             }
             else
                 logger.error(`Could not find any manga data.`)
@@ -46,12 +54,14 @@ export default function MangaPage({ params }) {
         }
     }
 
+
     //Map through the manga object and filter it by the realtionship type and id
     const handleRelationship = () => {
         const coverArt = manga?.data.relationships
             .flat()
             .filter(r => r.type === 'cover_art')
             .map(r => r.id)
+
 
         if (coverArt && coverArt != undefined)
             return coverArt[0].toString()
@@ -64,6 +74,27 @@ export default function MangaPage({ params }) {
         callManga()
     }, [params])
 
+    useEffect(() => {
+    if (manga && manga.data && manga.data.attributes && manga.data.attributes.title && manga.data.attributes.title.en) {
+            setMangaName(manga.data.attributes.title.en as string);
+            setMngId(params.mangaId as string);
+        }
+    }, [manga, params]);
+
+    const id = params.mangaId as string
+    useEffect(() => {
+        if (mngId != undefined && mangaName != undefined || '') {
+            setFavourite({
+                userName: user?.username,
+                comicID: id || mangaId,
+                comicTitle: mangaName || manga?.data.attributes.title.en as string,
+            })
+        } else {
+            console.log('No manga name found.')
+        }
+    }, [manga, user, params])
+
+
     return (
         <div className='flex min-h-screen min-w-screen flex-col justify-center items-center p-24 sm:p-1 mt-24 ml-10 mr-10'>
             <div className="flex flex-col justify-space-around ">
@@ -75,7 +106,12 @@ export default function MangaPage({ params }) {
                             {manga?.data.attributes.title.en}
                         </h1>
                         <div className="ml-20 mt-10">
-                            <FavouritesButton mngId={mangaId} mngName={mangaName} />
+                            <button 
+                                className={styles.button}
+                                onClick={() => handleAddFavourites(favourite)}
+                            >
+                                Add To Favourites
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -90,5 +126,5 @@ export default function MangaPage({ params }) {
                 <Chapters />
             </div>
         </div>
-    )
+    ) 
 }

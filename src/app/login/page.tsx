@@ -51,6 +51,7 @@ export default function Login() {
             const res = await loginUser(formData)
             if (res?.success) {
                 const userData =  {
+                    id: res?.data.user[0].id,
                     username: res?.data.user[0].username,
                     email: res?.data.user[0].email
                 } as User

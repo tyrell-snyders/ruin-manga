@@ -42,6 +42,7 @@ export interface ArtData {
 }
 
 export type User = {
+    id: number;
     username: string;
     email: string;
 }
@@ -66,4 +67,15 @@ export interface FavouritesData {
     userName: string,
     comicID: string,
     comicTitle: string
+}
+
+export interface Favourite {
+    id: number;
+    user_id: number;
+    comic_id: string;
+    manga_title: string;
+}
+
+export interface Favourites {
+    favourites: Favourite[];
 }

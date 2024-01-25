@@ -5,6 +5,7 @@ import { addFavourite } from "@/services/comic/favourites"
 import { FavouritesData } from "@/utils/interface"
 
 const handleAddFavourites = async(data: FavouritesData) => {
+    console.log(data)
     try {
         const result = await addFavourite(data)
         if (result?.success === true)
@@ -14,6 +15,7 @@ const handleAddFavourites = async(data: FavouritesData) => {
     } catch (e) {
         if (e instanceof Error) {
             logger.error(`Error getting trend data: ${e.message}`)
+            console.log(e.message)
             return e.message
         }
     }

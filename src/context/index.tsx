@@ -31,6 +31,7 @@ const initUser: User = JSON.parse(localStorage.getItem('user') as string)
 const initUsers: Users = {
     users: [
         {
+            id: 0,
             username: '',
             email: ''
         }
