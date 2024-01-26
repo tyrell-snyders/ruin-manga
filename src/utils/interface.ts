@@ -24,7 +24,7 @@ export interface Data {
         }
     },
     id: string,
-    relationships: Relationship
+    relationships: Relationship[]
 }
 
 export interface ArtData {

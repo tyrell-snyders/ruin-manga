@@ -7,6 +7,7 @@ import { GlobalContext } from "@/context";
 export default function CoverArt(props: { coverId: string, mngId: string }) {
     //context
     const context = useContext(GlobalContext)
+
     //useState hooks
     const [coverFile, setCoverFile] = useState<string>('')
     const [mngId, setMngId] = useState<string>('')
