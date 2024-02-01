@@ -4,7 +4,7 @@ import { logger } from "@/utils/logger"
 import { addFavourite } from "@/services/comic/favourites"
 import { FavouritesData } from "@/utils/interface"
 
-const handleAddFavourites = async(data: FavouritesData) => {
+export const handleAddFavourites = async(data: FavouritesData) => {
     console.log(data)
     try {
         const result = await addFavourite(data)
@@ -21,4 +21,6 @@ const handleAddFavourites = async(data: FavouritesData) => {
     }
 }
 
-export default handleAddFavourites
+export const handleRemoveFavourites = async(id: string) => {
+    console.log('removing...')
+}

@@ -2,7 +2,7 @@
 
 import Chapters from "@/components/Chapters/Chapters"
 import CoverArt from "@/components/CoverArt/CoverArt"
-import handleAddFavourites from "@/components/Favourites"
+import { handleAddFavourites, handleRemoveFavourites } from "@/components/Favourites"
 import { GlobalContext } from "@/context"
 import { getMangaData } from "@/services/comic/manga"
 import { FavouritesData } from "@/utils/interface"
@@ -11,7 +11,10 @@ import { Manga } from "@/utils/types"
 import { useState, useContext, useEffect } from "react"
 
 const styles = {
-    button: `disabled:opacity-50 inline-flex items-center justify-center bg-purple-600 
+    add: `disabled:opacity-50 inline-flex items-center justify-center bg-purple-600 
+            px-6 py-4 text-lg text-white transition-all duration-200 
+            ease-in-out focus:shadow font-medium uppercase tracking-wide rounded-3xl`,
+    remove: `disabled:opacity-50 inline-flex items-center justify-center bg-red-600 
             px-6 py-4 text-lg text-white transition-all duration-200 
             ease-in-out focus:shadow font-medium uppercase tracking-wide rounded-3xl`
 }
@@ -25,13 +28,14 @@ export default function MangaPage({ params }) {
     const [mangaName, setMangaName] = useState<string>('')
     const [mngId, setMngId] = useState<string>('')
     const [favourite, setFavourite] = useState<FavouritesData>({} as FavouritesData)
+    const [comicID, setComicID] = useState<string>('')
 
     if (context == null)
         return (
             <h1>Internal Server Error</h1>
         )
 
-    const { mangaId, setMangaId, user } = context
+    const { mangaId, setMangaId, user, favourites, loading } = context
 
 
     const handleManga = async(mangaId: string) => {
@@ -67,6 +71,7 @@ export default function MangaPage({ params }) {
             return coverArt[0].toString()
     }
 
+
     useEffect(() => {
         async function callManga() {
             await handleManga(params.mangaId)
@@ -94,6 +99,17 @@ export default function MangaPage({ params }) {
         }
     }, [manga, user, params])
 
+    useEffect(() => {
+        if (!loading && favourites) {
+            const cId = favourites.favourites
+                .flat()
+                .filter(f => f.comic_id === id)
+                .map(f => f.comic_id)[0]
+
+            setComicID(cId)
+        }
+    }, [favourites, loading])
+
 
     return (
         <div className='flex min-h-screen min-w-screen flex-col justify-center items-center p-24 sm:p-1 mt-24 ml-10 mr-10'>
@@ -105,14 +121,27 @@ export default function MangaPage({ params }) {
                         <h1 className="ml-20 font-bold text-xl">
                             {manga?.data.attributes.title.en}
                         </h1>
-                        <div className="ml-20 mt-10">
-                            <button 
-                                className={styles.button}
-                                onClick={() => handleAddFavourites(favourite)}
-                            >
-                                Add To Favourites
-                            </button>
-                        </div>
+                        {
+                            comicID && favourites.favourites && favourites.favourites.length ?
+                            (
+                                <div className="ml-20 mt-10">
+                                    <button 
+                                        className={styles.remove}
+                                        onClick={() => handleRemoveFavourites(comicID)}
+                                    >
+                                        Remove From Favourites
+                                    </button>
+                                </div>
+                            ) : (<div className="ml-20 mt-10">
+                                <button 
+                                    className={styles.add}
+                                    onClick={() => handleAddFavourites(favourite)}
+                                >
+                                    Add To Favourites
+                                </button>
+                                </div>
+                            )
+                        }
                     </div>
                 </div>
                 {/* Descritpion */}
