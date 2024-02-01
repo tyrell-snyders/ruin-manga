@@ -17,32 +17,7 @@ export default function Favourites() {
             <h1>No Context</h1>
         )
     }
-    const { user } = context
-
-    // use Hooks
-    const [favourites, setFavourites] = useState<Favourites>(null)
-    const [loading, setLoading] = useState(true)
-
-    const handleFavourites = async () => {
-        try {
-            setLoading(true);
-            const res = await getFavourites(user.id)
-            setFavourites(res?.result as Favourites)
-        } catch (e) {
-            if (e instanceof Error) {
-                logger.error(`Error: ${e.message}`)
-            }
-        } finally {
-            setLoading(false)
-        }
-    }
-
-    useEffect(() => {
-        async function getFav() {
-            await handleFavourites()
-        }
-        getFav()
-    }, [user])
+    const { user, favourites, loading } = context
 
     useEffect(() => {
         if (!loading && favourites) {
