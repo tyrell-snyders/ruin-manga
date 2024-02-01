@@ -2,68 +2,48 @@ import { NextRequest, NextResponse } from "next/server"
 import { logger } from "@/utils/logger"
 import { NextApiRequest, NextApiResponse } from "next"
 import axios, { AxiosResponse } from 'axios'
+import { FavouritesData } from "@/utils/interface"
 
 export const dynamic = 'force-dynamic'
 
-const baseUrl = 'http://localhost:4000/api/favourites'
+const baseUrl = 'http://127.0.0.1:4000/api/favourites'
 
-export const POST = async(req: NextRequest, res: NextApiResponse) => {
+export const POST = async(req: NextApiRequest, res: NextApiResponse) => {
     if (req.method === 'POST') {
         try {
             // Read the request body as a string
-            const requestBody = await req.text();
-            // Parse the string as JSON
-            const body = JSON.parse(requestBody);
-            const { data } = await axios.post(`${baseUrl}/add`, body, {
+            const requestBody = await req.json()
+            console.log('RequestBody: \n', requestBody)
+            const res = await fetch(`${baseUrl}/add`, {
+                method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'POST',
-                    'Access-Control-Allow-Headers': 'Content-Type'
-                }
-            })
-            console.log('After API fetch', data)
-            if (data != null) {
-                return NextResponse.json({
-                    message: 'Successfully added to favourites',
-                    success: true
-                })
-            } else
-                return new NextResponse('Failed to add to favourites.', {
-                    status: 400
-                })
-        } catch (e) {
-            if (e instanceof Error) {
-                logger.error(`Error: ${e.cause}`)
-                return new NextResponse('Internal Server Error', {
-                    status: 500
-                })
-            }
-        }
-    } else {
-        res.status(405).end()
-    }
-}
+                },
+                body: JSON.stringify(requestBody)
+            }).catch((error) => {
+                console.error('Error making fetch request:', error);
+                throw error;
+            });
 
-export const GET = async (req: NextRequest, res: NextApiResponse, route: { params: { userID: string }}) => {
-    if (req.method === 'GET') {
-        try {
-            const userID = route.params.userID
-            const { data } = await axios.get(`${baseUrl}/get-favourites?user_id${userID}`)
-            
-            if (data != null) {
-                return NextResponse.json({
-                    result: data,
-                    success: true
-                })
-            } else {
-                return new NextResponse('Failed to get favourites', {
-                    status: 400
-                })
+            console.log('Res: \n', res)
+
+            if (res.ok) {
+                const data = await res.json()
+                console.log('After API fetch\n', data)
+                if (data != null) {
+                    return NextResponse.json({
+                        message: 'Successfully added to favourites',
+                        success: true
+                    })
+                } else
+                    return new NextResponse('Failed to add to favourites.', {
+                        status: 400
+                    })
             }
+            
         } catch (e) {
             if (e instanceof Error) {
-                logger.error(`Error: ${e.cause}`)
+                logger.error(`Error: ${e.message}`)
                 return new NextResponse('Internal Server Error', {
                     status: 500
                 })

@@ -60,7 +60,7 @@ export default function Favourites() {
 
     return (
         <div className="flex min-h-screen min-w-screen flex-col justify-center items-center p-24 sm:p-1 ml-10 mr-10">
-            <div className="flex flex-col items-center border border-gray-200 rounded-lg shadow-md py-4 px-4">
+            <div className="flex flex-col items-center border border-gray-200 rounded-lg shadow-md py-4 px-4 my-20">
                 <h1 className="text-2xl font-bold">Favourites</h1>
                 <div className="grid gap-6 lg:grid-cols-4 sm:gap-4 md:grid-cols-2 m-8">
                     {

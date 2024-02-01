@@ -8,26 +8,13 @@ export const addFavourite = async(favouritesData: FavouritesData) => {
     console.log(favouritesData)
     try {
         if (favouritesData && favouritesData !== undefined) {
-            // console.log('before fetch')
 
-            // const res = await fetch(`${baseUrl}/api/comic/favourites`, {
-            //     method: 'POST',
-            //     headers: {
-            //         'content-type': 'application/json'
-            //     },
-            //     body: JSON.stringify(favouritesData),
-            // })
+            console.log('before fetch')
+
+            const { data } = await axios.post(`${baseUrl}/api/comic/favourites`, favouritesData)
             // console.log('after fetch')
             // const data = await res.json()
-            // console.log('after data')
-            const { data } = await axios.post(`${baseUrl}/api/comic/favourites`, favouritesData, {
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'POST',
-                    'Access-Control-Allow-Headers': 'Content-Type'
-                }
-            })
+            // console.log('after data\n', data)
             return data
         } else {
             logger.error(`Could not add favourite.`)
@@ -35,7 +22,6 @@ export const addFavourite = async(favouritesData: FavouritesData) => {
     } catch (e) {
         if (e instanceof Error) {
             logger.error(e.message)
-            console.log(e)
         }        
     }
 }
