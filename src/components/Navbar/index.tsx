@@ -65,7 +65,7 @@ function NavItems(props: any) {
         </div>
     );
 }
-
+// TODO: modal navigation
 export default function Navbar() {
     const [showModal, setShowModal] =
         useState(false);
