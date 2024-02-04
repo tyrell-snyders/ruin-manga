@@ -24,7 +24,7 @@ export interface Data {
         }
     },
     id: string,
-    relationships: Relationship
+    relationships: Relationship[]
 }
 
 export interface ArtData {
@@ -42,6 +42,7 @@ export interface ArtData {
 }
 
 export type User = {
+    id: number;
     username: string;
     email: string;
 }
@@ -60,4 +61,21 @@ export interface RegisterForm {
     username: string,
     email: string,
     pass: string
+}
+
+export interface FavouritesData {
+    userName: string,
+    comicID: string,
+    comicTitle: string
+}
+
+export interface Favourite {
+    id: number;
+    user_id: number;
+    comic_id: string;
+    manga_title: string;
+}
+
+export interface Favourites {
+    favourites: Favourite[];
 }

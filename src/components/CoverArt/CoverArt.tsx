@@ -3,10 +3,12 @@
 import { useContext, useEffect, useState } from "react";
 import handleCoverArt from ".";
 import { GlobalContext } from "@/context";
+import Image from "next/image";
 
 export default function CoverArt(props: { coverId: string, mngId: string }) {
     //context
     const context = useContext(GlobalContext)
+
     //useState hooks
     const [coverFile, setCoverFile] = useState<string>('')
     const [mngId, setMngId] = useState<string>('')

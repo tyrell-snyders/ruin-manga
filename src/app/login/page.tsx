@@ -8,7 +8,7 @@ import InputComponent from "@/components/FormElements"
 import { LoginForm, User } from "@/utils/interface"
 import { logger } from "@/utils/logger"
 import { loginUser } from "@/services/auth/login/index.service"
-import { cookies } from 'next/headers'
+import { useCookies } from 'react-cookie'
 
 const initForm: LoginForm = {
     username: '',
@@ -38,6 +38,7 @@ export default function Login() {
     const router = useRouter()
 
     const [formData, setFormData] = useState(initForm)
+    const [cookies, setCookie] = useCookies(['token']);
 
     const isValid = () => {
         return formData && formData.username && formData.username.trim() !== '' 
@@ -50,13 +51,14 @@ export default function Login() {
             const res = await loginUser(formData)
             if (res?.success) {
                 const userData =  {
+                    id: res?.data.user[0].id,
                     username: res?.data.user[0].username,
                     email: res?.data.user[0].email
                 } as User
                 setUser(userData)
                 
                 //Create user session with cookies
-                cookies().set('token', res?.data.token)
+                setCookie('token', res?.data.token)
 
                 //Add user data to local storage
                 localStorage.setItem('user', JSON.stringify(userData))
