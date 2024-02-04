@@ -22,6 +22,7 @@ const styles = {
 }
 
 export default function Login() {
+
     const context = useContext(GlobalContext)
 
     if (context === null) {
