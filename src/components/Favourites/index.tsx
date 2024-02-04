@@ -5,11 +5,11 @@ import { addFavourite } from "@/services/comic/favourites"
 import { FavouritesData } from "@/utils/interface"
 
 export const handleAddFavourites = async(data: FavouritesData) => {
-    console.log(data)
     try {
         const result = await addFavourite(data)
-        if (result?.success === true)
+        if (result?.success === true) {
             return result
+        }
         else
             return `No manga/manhwa with title: ${data?.comicTitle} found.`
     } catch (e) {

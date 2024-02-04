@@ -9,6 +9,7 @@ import { FavouritesData } from "@/utils/interface"
 import { logger } from "@/utils/logger"
 import { Manga } from "@/utils/types"
 import { useState, useContext, useEffect } from "react"
+import { useRouter } from 'next/navigation'
 
 const styles = {
     add: `disabled:opacity-50 inline-flex items-center justify-center bg-purple-600 
@@ -23,13 +24,6 @@ export default function MangaPage({ params }) {
     //context
     const context = useContext(GlobalContext)
 
-    //useState hooks
-    const [manga, setManga] = useState<Manga>()
-    const [mangaName, setMangaName] = useState<string>('')
-    const [mngId, setMngId] = useState<string>('')
-    const [favourite, setFavourite] = useState<FavouritesData>({} as FavouritesData)
-    const [comicID, setComicID] = useState<string>('')
-
     if (context == null)
         return (
             <h1>Internal Server Error</h1>
@@ -37,6 +31,14 @@ export default function MangaPage({ params }) {
 
     const { mangaId, setMangaId, user, favourites, loading } = context
 
+    //useState hooks
+    const [manga, setManga] = useState<Manga>()
+    const [mangaName, setMangaName] = useState<string>('')
+    const [mngId, setMngId] = useState<string>('')
+    const [favourite, setFavourite] = useState<FavouritesData>({} as FavouritesData)
+    const [comicID, setComicID] = useState<string>('')
+
+    const router = useRouter()    
 
     const handleManga = async(mangaId: string) => {
         try {
@@ -109,7 +111,10 @@ export default function MangaPage({ params }) {
             setComicID(cId)
         }
     }, [favourites, loading])
-
+    
+    const handleRemove = async() => {
+        router.push(`/manga/${id}`)
+    }
 
     return (
         <div className='flex min-h-screen min-w-screen flex-col justify-center items-center p-24 sm:p-1 mt-24 ml-10 mr-10'>
@@ -127,7 +132,7 @@ export default function MangaPage({ params }) {
                                 <div className="ml-20 mt-10">
                                     <button 
                                         className={styles.remove}
-                                        onClick={() => handleRemoveFavourites(comicID)}
+                                        onClick={handleRemove}
                                     >
                                         Remove From Favourites
                                     </button>
@@ -135,7 +140,10 @@ export default function MangaPage({ params }) {
                             ) : (<div className="ml-20 mt-10">
                                 <button 
                                     className={styles.add}
-                                    onClick={() => handleAddFavourites(favourite)}
+                                    onClick={() => {
+                                        handleAddFavourites(favourite)
+                                        router.push(`/manga/${id}`)
+                                    }}
                                 >
                                     Add To Favourites
                                 </button>
