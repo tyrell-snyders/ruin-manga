@@ -8,6 +8,9 @@ import {
 const LoginModal = ({
     showModal,
     handleCloseModal,
+}: {
+    showModal: boolean,
+    handleCloseModal: () => void,
 }) => {
     return (
       <Modal show={showModal} onHide={handleCloseModal}>

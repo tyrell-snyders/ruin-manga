@@ -16,7 +16,17 @@ import { GlobalContext } from "@/context";
 import { logger } from "@/utils/logger";
 import Cookies from "js-cookie";
 import LoginModal from "../Modal/LoginModal";
-import { Button } from "react-bootstrap";
+import {
+    Button,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+} from "react-bootstrap";
+import {
+    useDisclosure,
+    ModalContent,
+} from "@nextui-org/react";
 
 function NavItems(props: any) {
     const { isModalView, router } =
@@ -67,6 +77,12 @@ function NavItems(props: any) {
 }
 // TODO: modal navigation
 export default function Navbar() {
+    const {
+        isOpen,
+        onOpen,
+        onOpenChange,
+    } = useDisclosure();
+
     const [showModal, setShowModal] =
         useState(false);
     const context = useContext(
@@ -107,26 +123,63 @@ export default function Navbar() {
                         Ruin Manga
                     </span>
                 </div>
-                <Button
-                    onClick={() =>
-                        setShowModal(
-                            true
-                        )
-                    }
-                    variant="success"
+                <button
+                    type="button"
+                    className="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
                 >
-                    Login 
-                </Button>
-                <LoginModal
-                    showModal={
-                        showModal
-                    }
-                    handleCloseModal={() =>
-                        setShowModal(
-                            false
-                        )
-                    }
-                />
+                    Launch static
+                    backdrop modal
+                </button>
+
+                <div
+                    className="modal fade"
+                    id="staticBackdrop"
+                    data-bs-backdrop="static"
+                    data-bs-keyboard="false"
+                    tabindex="-1"
+                    aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true"
+                >
+                    <div className="modal-dialog">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h1
+                                    className="modal-title fs-5"
+                                    id="staticBackdropLabel"
+                                >
+                                    Modal
+                                    title
+                                </h1>
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                ></button>
+                            </div>
+                            <div className="modal-body">
+                                ...
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                >
+                                    Close
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-primary"
+                                >
+                                    Understood
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="flex flex-row md:order-2 gap-4">
                     {isAuth ? (
                         <Link
