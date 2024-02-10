@@ -64,3 +64,8 @@ export type Mng = {
 export type SearchResults = {
     data: Mng[]
 }
+
+export type ChapterPages = {
+    pages: string[];
+    hash: string
+}

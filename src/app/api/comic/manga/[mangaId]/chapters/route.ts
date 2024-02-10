@@ -5,6 +5,7 @@ const url = 'http://localhost:8081/api/v1/manga/chapters'
 
 export const dynamic = 'force-dynamic'
 
+//Get manga chapters
 export const GET = async(req: NextRequest, route : { params: {mangaId: string} }) => {
     if (req.method === 'GET') {
         try {
