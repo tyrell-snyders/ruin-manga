@@ -1,4 +1,5 @@
 import { logger } from "@/utils/logger"
+import { ChapterPages } from "@/utils/types"
 
 //NextJS api url
 const baseUrl = 'http://localhost:3000/api/comic'
@@ -67,7 +68,7 @@ export const getPages = async(comic: { mangaId: string, chapterId: string }) => 
                 },
                 next: { revalidate: 3600 } //revalidate data every hour
             })
-            const data = await res.json()
+            const data = await res.json() as ChapterPages
             return data
         } else
             return null
