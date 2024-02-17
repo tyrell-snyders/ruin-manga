@@ -2,7 +2,7 @@
 const nextConfig = {
     images: {
         remotePatterns: [{
-            hostname: 'random.imagecdn.app'
+            hostname: 'uploads.mangadex.org'
         }]
     }
 }
