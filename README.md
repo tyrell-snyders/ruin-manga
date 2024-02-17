@@ -12,7 +12,7 @@ The frontend of Ruin Manga is built using TypeScript, Tailwind CSS, and Next.js.
 
 ### MangaData Microservice [ruinManga](https://github.com/tyrell-snyders/ruinManga)
 
-- **Technology Stack:** Java Spring Boot
+- **Technology Stack:** Java Spring Boot | TypeScript | NextJs14 | PrismaDB | MySQL | TailwindCss | Bootstrap
 - **Purpose:** This microservice is responsible for fetching manga data from the MangaDex API. It acts as a bridge between the frontend and the external MangaDex API, providing a standardized and optimized interface for retrieving manga content. This microservice ensures that users can access the latest manga titles, summaries, and other metadata efficiently.
 
 ### User Management Microservice [rnManga-fastify](https://github.com/tyrell-snyders/rnManha-fastify)
