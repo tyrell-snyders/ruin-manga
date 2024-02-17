@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { logger } from "@/utils/logger"
 import { NextApiRequest, NextApiResponse } from "next"
-import axios, { AxiosResponse } from 'axios'
-import { FavouritesData } from "@/utils/interface"
 
 export const dynamic = 'force-dynamic'
 
