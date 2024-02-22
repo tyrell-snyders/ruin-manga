@@ -22,10 +22,6 @@ export default function ChapterPage({ params } : { params: { mangaId: string, ch
     // State and Ref initialization
     const [pages, setPages] = useState<string[]>(null)
     const [hash, setHash] = useState<string>()
-    const dummyData: ChapterPages = {
-        pages: ['1', '2', '3', '4', '5', '6'],
-        hash: '2889593493200'
-    }
 
     const handleImages = async (mangaId: string, chapterId: string) => {
         const chapterPages: ChapterPages = await getPages({ mangaId, chapterId}) as ChapterPages
