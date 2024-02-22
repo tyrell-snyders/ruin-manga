@@ -56,7 +56,7 @@ export default function GlobalState({ children } : {children: React.ReactNode}) 
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        if (user != null)
+        if (user != null || undefined)
             setIsAuth(true)
     }, [user])
 
