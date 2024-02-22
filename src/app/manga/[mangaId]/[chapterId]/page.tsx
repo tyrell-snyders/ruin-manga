@@ -22,10 +22,6 @@ export default function ChapterPage({ params } : { params: { mangaId: string, ch
     // State and Ref initialization
     const [pages, setPages] = useState<string[]>(null)
     const [hash, setHash] = useState<string>()
-    const dummyData: ChapterPages = {
-        pages: ['1', '2', '3', '4', '5', '6'],
-        hash: '2889593493200'
-    }
 
     const handleImages = async (mangaId: string, chapterId: string) => {
         const chapterPages: ChapterPages = await getPages({ mangaId, chapterId}) as ChapterPages
@@ -57,85 +53,26 @@ export default function ChapterPage({ params } : { params: { mangaId: string, ch
     )
 }
 
+//Image Handling
 function ImagePages({ data }: { data: ChapterPages }) {
-    // State and Ref initialization
-    const [currentImg, setCurrentImg] = useState(0)
-    const [carouselSize, setCarouselSize] = useState({ width: 0, height: 0 })
-    const carouselRef = useRef<HTMLDivElement>(null)
-
-    //Get the initial carousel size
-    useEffect(() => {
-        let elem = carouselRef.current as unknown as HTMLDivElement
-        let { width, height } = elem.getBoundingClientRect()
-        if (carouselRef.current) {
-            setCarouselSize({
-                width,
-                height,
-            })
-        }
-    }, [])
-
-    // Calculate the aspect ratio of the images
-    const intrinsicAspectRatio = 275 / 192
-
-    // Update the height of the carousel container based on the aspect ratio
-    useEffect(() => {
-        if (carouselRef.current) {
-            carouselRef.current.style.height = `${carouselRef.current.offsetWidth * intrinsicAspectRatio}px`
-        }
-    }, [carouselSize.width])
-
     const baseImageUrl = 'https://uploads.mangadex.org/data/'
-
-    console.log(carouselSize)
-
-    // Calculate the height of the images based on their aspect ratio
-    const imageAspectRatio = 367 / 256
-    const imageHeight = Math.round(carouselSize.width * imageAspectRatio)
-
-
     return (
         <div>
-            {/* Carousel container */}
-            <div className='w-80 h-80 rounded-md overflow-hidden relative'>
+            <div className='rounded-md overflow-hidden'>
                 {/* Image container */}
-                <div
-                    ref={carouselRef}
-                    style={{
-                        left: -currentImg * carouselSize.width
-                    }}
-                    className='w-full h-full absolute flex transition-all duration-300'>
-                    {/* Map through data to render images */}
+                {/* Map through data to render images */}
                     {data.pages.map((v, i) => (
-                        <div key={v} className='relative shrink-0 w-full h-full'>
+                        <div key={v} className='w-full h-full mt-2'>
                             <Image
                                 className='pointer-events-none'
                                 alt={`Page ${i}`}
-                                width={carouselSize.width}
-                                height={imageHeight}
+                                width={800}
+                                height={800}
                                 objectFit='contain'
                                 src={`${baseImageUrl}/${data.hash}/${v}`}
                             />
                         </div>
                     ))}
-                </div>
-            </div>
-            {/* Navigation buttons */}
-            <div className='flex justify-center mt-3'>
-                <button
-                    disabled={currentImg === 0}
-                    onClick={() => setCurrentImg(prev => prev - 1)}
-                    className={`border px-4 py-2 font-bold ${currentImg === 0 && 'opacity-50'}`}
-                >
-                    {"<"}
-                </button>
-                <button
-                    disabled={currentImg === data.pages.length - 1}
-                    onClick={() => setCurrentImg(prev => prev + 1)}
-                    className={`border px-4 py-2 font-bold ${currentImg === data.pages.length - 1 && 'opacity-50'}`}
-                >
-                    {">"}
-                </button>
             </div>
         </div>
     )
