@@ -15,7 +15,7 @@ export const search = async(title: string) => {
                     'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                     'Access-Control-Allow-Headers': 'Content-Type',
                 },
-                next: { revalidate: 3600 } //revalidate data every hour
+                cache: 'no-cache'
             })
 
             const data = await res.json()

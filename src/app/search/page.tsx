@@ -1,13 +1,16 @@
 'use client'
 
-import { useEffect, useState, useContext } from 'react'
+import { useEffect, useState, useContext, Suspense, lazy } from 'react'
 import { logger } from '@/utils/logger'
 import { GlobalContext } from '@/context'
-import SrchResults from '@/components/Search/SearchResults'
+// import SrchResults from '@/components/Search/SearchResults'
 import handleSrch from '@/components/Search'
 import { SearchResults } from "@/utils/types"
 import { searchFormControl } from '@/utils/formControls'
 import InputComponent from '@/components/FormElements'
+
+//Lazy
+const SrchResults = lazy(() => import('@/components/Search/SearchResults'))
 
 
 const styles = {
@@ -105,7 +108,9 @@ export default function Search() {
             <div className={styles.srcRes}>
                 <div className="bg-gray-700 rounded-lg mt-20 mb-10 sm:py-16 border border-gray-200">
                     <div className="mx-4 my-10 px-4 sm:px-6">
-                        <SrchResults coverArt={coverArt} coverId={""} srchResults={searchResult as SearchResults}/>
+                        <Suspense fallback={<p>Searching...</p>}>
+                            <SrchResults coverArt={coverArt} coverId={""} srchResults={searchResult as SearchResults}/>
+                        </Suspense>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 
 import { Manga, Mng, SearchResults } from "@/utils/types"
 import Link from "next/link"
-import { useState, useEffect, useContext } from "react"
+import { useState, memo, useEffect, useContext } from "react"
 import CoverArt from "../CoverArt/CoverArt"
 import { useRouter } from "next/navigation"
 
@@ -10,7 +10,18 @@ const styles = {
     grid: 'mt-8 grid gap-6 lg:grid-cols-4 sm:gap-4 md:grid-cols-2'
 }
 
-export default function SrchResults(props: {srchResults: SearchResults, coverId: string, coverArt: string[]}) {
+const useConditionalRender = (results:SearchResults, coverArt: string[]) => {
+    const [shouldRender, setShouldRender] = useState(results != null && coverArt?.length > 0);
+
+    useEffect(() => {
+        setShouldRender(results != null && coverArt?.length > 0);
+    }, [results, coverArt]);
+
+    return shouldRender;
+};
+
+export const SrchResults = (props: {srchResults: SearchResults, coverId: string, coverArt: string[]}) => {
+    const shouldRender = useConditionalRender(props.srchResults, props.coverArt);
     //hooks
     const [results, setResults] = useState<Mng[]>([])
     const [coverArt, setCoverArt] = useState<string[]>([])
@@ -40,3 +51,5 @@ export default function SrchResults(props: {srchResults: SearchResults, coverId:
         </div>
     )
 }
+
+export default memo(SrchResults);

@@ -8,16 +8,15 @@ const handleSrch = async(title: string) => {
         const result = await search(title)
         if (result?.data)
             return result
-        else
-            return `No manga/manhwa with title: ${title} found.`
-    } catch (e) {
-        if (e instanceof Error) {
-            logger.error(`${e.message}`)
-            return e.message
+        else {
+            return { error: `No manga/manhwa with title: ${title} found.` };
+        }
+    } catch (error) {
+        if (error instanceof Error) {
+            logger.error(error.message);
+            throw new Error('An error occurred during search.');
         }
     }
-
-    return ''
-}
+};
 
 export default handleSrch
