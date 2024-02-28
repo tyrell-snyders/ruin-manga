@@ -20,7 +20,7 @@ export default function Trending() {
         return null;
     }
 
-    const { coverArt, setcoverArt } = context
+    const { coverArt, setcoverArt, loading, setLoading } = context
     
     const getTrending = async () => {
         try {
@@ -59,20 +59,29 @@ export default function Trending() {
             .flat() // Flatten the nested arrays
             .filter((relationship) => relationship.type === 'cover_art')
             .map((relationship) => relationship.id);
-    } else {
-        console.log("dta is null");
     }
 
     useEffect(() => {
         setcoverArt(coverArtIds)
+        setLoading(false)
     }, [dta])
+
+    if (loading) {
+        return (
+            <section className='bg-gray-700 rounded-lg mt-20 mb-10 sm:py-16'>
+                <div className="mx-4 my-10 px-4 sm:px-6">
+                    <h1>Loading...</h1>
+                </div>
+            </section>
+        )
+    }
     
     return (
         <section className='bg-gray-700 rounded-lg mt-20 mb-10 sm:py-16 border border-gray-200'>
             <div className="mx-4 my-10 px-4 sm:px-6">
                 <div className="grid gap-6 lg:grid-cols-4 sm:gap-4 md:grid-cols-2">
                     {
-                        data?.data && data?.data.length ?
+                        !loading && data?.data && data?.data.length ?
                         data?.data.map((item: any, i: number) => {
                             return ( 
                                 <article 

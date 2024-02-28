@@ -31,7 +31,7 @@ export const GlobalContext = createContext<GlobalContextValue | null>(null)
 
 
 //Initialization
-const initUser: User = JSON.parse(localStorage.getItem('user') as string)
+// const initUser: User = JSON.parse(localStorage.getItem('user') as string)
 
 const initUsers: Users = {
     users: [
@@ -48,12 +48,19 @@ export default function GlobalState({ children } : {children: React.ReactNode}) 
     //states
     const [showNavModal, setShowNavModal] = useState(false)
     const [isAuth, setIsAuth] = useState(false)
-    const [user, setUser] = useState<User>(initUser)
+    const [user, setUser] = useState<User>(null)
     const [coverArt, setcoverArt] = useState<Array<string>>([])
     const [mangaId, setMangaId] = useState<string>('')
     const [users, setUsers]  = useState<Users>(initUsers)
     const [favourites, setFavourites] = useState<Favourites>(null)
     const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        // Access localStorage here
+        const initUser: User | null = JSON.parse(localStorage.getItem('user') as string);
+        setUser(initUser);
+    }, []);
+
 
     useEffect(() => {
         if (user != null || undefined)
