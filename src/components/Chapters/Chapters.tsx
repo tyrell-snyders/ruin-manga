@@ -65,7 +65,7 @@ export default function Chapters() {
                 chapters.map((item: Chapter, i: number) => {
                     return (
                         <div key={i} className='flex flex-col mt-6 hover:border hover-border-gray-200 rounded-md p-2'>
-                            <Link href={`/manga/${mangaId}/${item.id}`}>Chapter {item.chapter}</Link>
+                            <Link href={`/manga/${mangaId}/${item.id}`} rel="preload">Chapter {item.chapter}</Link>
                         </div>
                     )
                 }) :  <h1>No Chapters Available</h1>

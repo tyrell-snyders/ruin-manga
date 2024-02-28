@@ -37,9 +37,11 @@ export default function CoverArt(props: { coverId: string, mngId: string }) {
         <div>
             {
                 coverFile != null ? 
-                <img
+                <Image
                     src={`https://uploads.mangadex.org/covers/${mangaId || mngId}/${coverFile}.256.jpg`} alt='Hi'
                     className="h-full w-full object-cover transition-all duration-300 group-hover:scale-125 w-60 h-90 rounded-md"
+                    width={500}
+                    height={300}
                     loading="lazy"
                 /> : null
             }

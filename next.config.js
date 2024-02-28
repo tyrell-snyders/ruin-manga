@@ -1,10 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        remotePatterns: [{
-            hostname: 'uploads.mangadex.org'
-        }]
-    }
+        domains: ['uploads.mangadex.org'], // Add the allowed hostname
+    },
 }
+
 
 module.exports = nextConfig
