@@ -7,9 +7,13 @@ import { getMangaData } from "@/services/comic/manga"
 import { FavouritesData } from "@/utils/interface"
 import { logger } from "@/utils/logger"
 import { Manga } from "@/utils/types"
-import { useState, useContext, useEffect, memo } from "react"
+import { useState, useContext, useEffect, memo, useRef, Suspense } from "react"
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
+import { useInView } from 'react-intersection-observer';
+
+
+
 
 const DynamicChapters = dynamic(() => import('@/components/Chapters/Chapters'), {
   ssr: true,
@@ -19,11 +23,28 @@ const MemoizedCoverArt = memo(CoverArt);
 
 const styles = {
     add: `disabled:opacity-50 inline-flex items-center justify-center bg-purple-600 
-            px-6 py-4 text-lg text-white transition-all duration-200 
-            ease-in-out focus:shadow font-medium uppercase tracking-wide rounded-3xl`,
+            px-6 py-4 text-sm text-white transition-all duration-200 
+            ease-in-out focus:shadow font-medium uppercase tracking-wide rounded-3xl sm:text-sm sm:text-base`,
     remove: `disabled:opacity-50 inline-flex items-center justify-center bg-red-600 
             px-6 py-4 text-lg text-white transition-all duration-200 
             ease-in-out focus:shadow font-medium uppercase tracking-wide rounded-3xl`
+}
+
+interface LazyLoadProps {
+  children: React.ReactNode; // Specifies children can be any JSX element
+  threshold?: number; // Optional threshold property, defaults to 0.5
+}
+
+//Lazy Loading
+const LazyLoad: React.FC<LazyLoadProps> = (props) => {
+    const { children, threshold = 0.5 } = props;
+    const { ref, inView } = useInView({ threshold });
+
+    return (
+        <div ref={ref}>
+            {inView && children}
+        </div>
+    );
 }
 
 export default function MangaPage({ params }) {
@@ -43,6 +64,9 @@ export default function MangaPage({ params }) {
     const [mngId, setMngId] = useState<string>('')
     const [favourite, setFavourite] = useState<FavouritesData>({} as FavouritesData)
     const [comicID, setComicID] = useState<string>(null)
+    const [showFullDescription, setShowFullDescription] = useState(false);
+    const [descriptionLength, setDescriptionLength] = useState(200)
+    const [fullDescription, setFullDescription] = useState("");
 
     const router = useRouter()    
 
@@ -117,10 +141,20 @@ export default function MangaPage({ params }) {
             setComicID(cId)
         }
     }, [favourites, loading])
+
+    useEffect(() => {
+    if (manga?.data?.attributes.description.en) {
+        setFullDescription(manga?.data?.attributes.description.en);
+    }
+    }, [manga]);
     
     const handleRemove = async() => {
         router.push(`/manga/${id}`)
     }
+
+    const handleToggleDescription = () => {
+        setShowFullDescription(!showFullDescription);
+    };
 
     if (loading) {
         return (
@@ -135,7 +169,7 @@ export default function MangaPage({ params }) {
             <div className="flex flex-col justify-space-around ">
                <div className="flex flex-row p-10 mb-2">
                     {/* Cover Image */}
-                    <MemoizedCoverArt coverId={handleRelationship()} className='mr-10' />
+                    <LazyLoad children={<MemoizedCoverArt coverId={handleRelationship()} className='mr-10' />} threshold={0.7} />
                     <div>
                         <h1 className="ml-20 font-bold text-xl">
                             {manga?.data.attributes.title.en}
@@ -167,10 +201,24 @@ export default function MangaPage({ params }) {
                     </div>
                 </div>
                 {/* Descritpion */}
-                <div className="m-10" style={{ height: '200px', overflow: 'hidden' }}>
-                    <h1 className='text-lg font-bold'>Description</h1>
-                    <p className=" text-clip overflow-hidden sm-text-ellipsis">{manga?.data.attributes.description.en}</p>
-                </div>
+                {
+                    manga?.data.attributes.description.en && (
+                        <div className="m-10">
+                        <h1 className="text-lg font-bold">Description</h1>
+                        {showFullDescription ? (
+                            <p className="text-base text-sm">{fullDescription}</p>
+                        ) : (
+                            <p className="text-base text-sm text-clip overflow-hidden sm:text-ellipsis">
+                            {fullDescription.substring(0, descriptionLength)}
+                            {fullDescription.length > descriptionLength && "..."}
+                            </p>
+                        )}
+                        <button onClick={() => setShowFullDescription(!showFullDescription)}>
+                            {showFullDescription ? "Show Less" : "Read More"}
+                        </button>
+                        </div>
+                    )
+                }
             </div>
             {/* Chapters */}
             <div className="flex-col mt-10 mb-10 ml-4">
