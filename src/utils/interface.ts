@@ -14,6 +14,7 @@ export interface Relationship {
 }
 
 export interface Data {
+    [x: string]: any
     attributes: {
         contentRating: string,
         description: {

@@ -52,6 +52,7 @@ export default function Trending() {
     const dta = data?.data
     let coverArtIds: string[] = []
 
+
     if (dta && dta.length > 0) {
         // Extract IDs with type 'cover_art'
         coverArtIds = dta

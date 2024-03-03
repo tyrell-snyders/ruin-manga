@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { logger } from "@/utils/logger"
 import { NextApiRequest, NextApiResponse } from "next"
-import { json } from "stream/consumers"
 
 export const dynamic = 'force-dynamic'
 

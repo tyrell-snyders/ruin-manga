@@ -168,7 +168,7 @@ export default function MangaPage({ params }) {
         <div className='flex min-h-screen min-w-screen flex-col justify-center items-center p-24 sm:p-1 mt-24 ml-10 mr-10'>
             <div className="flex flex-col justify-space-around ">
                <div className="flex flex-row p-10 mb-2">
-                    {/* Cover Image */}
+                    {/* Cover Image Lazy Loading */}
                     <LazyLoad children={<MemoizedCoverArt coverId={handleRelationship()} className='mr-10' />} threshold={0.7} />
                     <div>
                         <h1 className="ml-20 font-bold text-xl">
@@ -205,6 +205,7 @@ export default function MangaPage({ params }) {
                     manga?.data.attributes.description.en && (
                         <div className="m-10">
                         <h1 className="text-lg font-bold">Description</h1>
+                        {/* Truncate the text to 200 characters */}
                         {showFullDescription ? (
                             <p className="text-base text-sm">{fullDescription}</p>
                         ) : (
