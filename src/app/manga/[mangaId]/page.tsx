@@ -66,7 +66,7 @@ export default function MangaPage({ params }) {
     const [comicID, setComicID] = useState<string>(null)
     const [showFullDescription, setShowFullDescription] = useState(false);
     const [descriptionLength, setDescriptionLength] = useState(200)
-    const [fullDescription, setFullDescription] = useState("");
+    const [fullDescription, setFullDescription] = useState(""); 
 
     const router = useRouter()    
 
@@ -147,9 +147,9 @@ export default function MangaPage({ params }) {
         setFullDescription(manga?.data?.attributes.description.en);
     }
     }, [manga]);
-    
+
     const handleRemove = async() => {
-        router.push(`/manga/${id}`)
+        //TODO: Remove the manga from the favourites
     }
 
     const handleToggleDescription = () => {
