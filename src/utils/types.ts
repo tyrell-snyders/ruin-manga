@@ -69,3 +69,14 @@ export type ChapterPages = {
     pages: string[];
     hash: string
 }
+
+export type Comment = {
+    id: number;
+    comment: string;
+    userId: number;
+    chapterId: string;
+    upvotes: number;
+    downvotes: number;
+    createdAt: string;
+    updatedAt?: string;
+}

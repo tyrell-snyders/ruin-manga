@@ -1,5 +1,6 @@
 'use client'
 
+import Comments from "@/components/Chapters/Comments/Comments"
 import { GlobalContext } from "@/context"
 import { getPages } from "@/services/comic/manga"
 import { logger } from "@/utils/logger"
@@ -57,7 +58,7 @@ export default function ChapterPage({ params } : { params: { mangaId: string, ch
 function ImagePages({ data }: { data: ChapterPages }) {
     const baseImageUrl = 'https://uploads.mangadex.org/data/'
     return (
-        <div>
+        <div className="mb-10">
             <div className='rounded-md overflow-hidden'>
                 {/* Image container */}
                 {/* Map through data to render images */}
@@ -74,6 +75,7 @@ function ImagePages({ data }: { data: ChapterPages }) {
                         </div>
                     ))}
             </div>
+            <Comments />
         </div>
     )
 }
