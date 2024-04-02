@@ -143,9 +143,9 @@ export default function MangaPage({ params }) {
     }, [favourites, loading])
 
     useEffect(() => {
-    if (manga?.data?.attributes.description.en) {
-        setFullDescription(manga?.data?.attributes.description.en);
-    }
+        if (manga?.data?.attributes.description.en) {
+            setFullDescription(manga?.data?.attributes.description.en);
+        }
     }, [manga]);
 
     const handleRemove = async() => {

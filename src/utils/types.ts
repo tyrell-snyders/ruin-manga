@@ -80,3 +80,4 @@ export type Comment = {
     createdAt: string;
     updatedAt?: string;
 }
+

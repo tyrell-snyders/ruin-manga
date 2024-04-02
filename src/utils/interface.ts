@@ -80,3 +80,9 @@ export interface Favourite {
 export interface Favourites {
     favourites: Favourite[];
 }
+
+export interface userComment {
+    username: string,
+    chapterId: string,
+    comment: string,
+}

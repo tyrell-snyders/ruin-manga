@@ -65,7 +65,8 @@ export default function Register() {
                                                 placeholder={controlItem.placeholder}
                                                 label={controlItem.label} 
                                                 value={formData[controlItem.id as keyof RegisterForm]}
-                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                componentType={controlItem.componnentType}
+                                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
                                                     setFormData({
                                                         ...formData,
                                                         [controlItem.id]: e.target.value

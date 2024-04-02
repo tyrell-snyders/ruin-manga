@@ -4,10 +4,12 @@ import { useState, useEffect, useContext } from "react"
 import { GlobalContext } from "@/context"
 import { Favourite, Favourites } from "@/utils/interface"
 import { logger } from "@/utils/logger"
-import { getFavourites } from "@/services/comic/favourites"
 import MangaCards from "@/components/MangaCards/MangaCards"
+import { useRouter } from "next/navigation"
 
 export default function Favourites() {
+    //router
+    const router = useRouter()
     //context
     const context = useContext(GlobalContext)
 
@@ -39,10 +41,10 @@ export default function Favourites() {
                 <h1 className="text-2xl font-bold">Favourites</h1>
                 <div className="grid gap-6 lg:grid-cols-4 sm:gap-4 md:grid-cols-2 m-8">
                     {
-                        favourites.favourites && favourites.favourites.length ?
-                        favourites.favourites.map((item: Favourite, i: number) => {
+                        favourites?.favourites && favourites.favourites.length ?
+                        favourites?.favourites.map((item: Favourite, i: number) => {
                             return (
-                                <div key={item.id}>
+                                <div key={item.id} onClick={() => router.push(`/manga/${item.comic_id}`)}>
                                     <MangaCards item={item} />
                                 </div>
                             )
