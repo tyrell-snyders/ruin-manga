@@ -1,11 +1,14 @@
 'use client'
 
+import Comments from "@/components/Chapters/Comments/Comments"
 import { GlobalContext } from "@/context"
 import { getPages } from "@/services/comic/manga"
+import { User } from "@/utils/interface"
 import { logger } from "@/utils/logger"
 import { ChapterPages } from "@/utils/types"
 import Image from "next/image"
 import { useState, useContext, useRef, useEffect } from "react"
+import { useParams } from 'next/navigation'
 
 export default function ChapterPage({ params } : { params: { mangaId: string, chapterId: string } }) { 
     // Context
@@ -17,7 +20,7 @@ export default function ChapterPage({ params } : { params: { mangaId: string, ch
             </div>
         )
 
-    const { loading, setLoading } = context
+    const { loading, setLoading, isAuth, user } = context
 
     // State and Ref initialization
     const [pages, setPages] = useState<string[]>(null)
@@ -39,6 +42,10 @@ export default function ChapterPage({ params } : { params: { mangaId: string, ch
         getImages()
     }, [params.chapterId])
 
+    useEffect(() => {
+        console.log(isAuth)
+    }, [context])
+
     // If the loading is true, then show the loading message
     if (loading) {
         return (
@@ -46,18 +53,21 @@ export default function ChapterPage({ params } : { params: { mangaId: string, ch
         )
     }
 
+
     return (
         <div className='flex  flex-col justify-center items-center sm:p-1 mt-24 ml-10 mr-10'>
-            {pages && hash && <ImagePages data={{ pages, hash } as ChapterPages} />}
+            {pages && hash && <ImagePages data={{ pages, hash } as ChapterPages} isAuth={isAuth} user={user} />}
         </div>
     )
 }
 
 //Image Handling
-function ImagePages({ data }: { data: ChapterPages }) {
+function ImagePages({ data, isAuth, user }: { data: ChapterPages, isAuth: boolean, user: User }) {
     const baseImageUrl = 'https://uploads.mangadex.org/data/'
+    const {mangaId, chapterId} = useParams<{mangaId: string, chapterId: string}>()
+
     return (
-        <div>
+        <div className="mb-10">
             <div className='rounded-md overflow-hidden'>
                 {/* Image container */}
                 {/* Map through data to render images */}
@@ -68,12 +78,13 @@ function ImagePages({ data }: { data: ChapterPages }) {
                                 alt={`Page ${i}`}
                                 width={800}
                                 height={800}
-                                objectFit='contain'
+                                
                                 src={`${baseImageUrl}/${data.hash}/${v}`}
                             />
                         </div>
                     ))}
             </div>
+            <Comments isAuth={isAuth} user={user} mangaId={mangaId} chapterId={chapterId} />
         </div>
     )
 }

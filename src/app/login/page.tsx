@@ -88,9 +88,10 @@ export default function Login() {
                                                 key={controlItem.id}
                                                 type={controlItem.type}
                                                 placeholder={controlItem.placeholder}
+                                                componentType={controlItem.componnentType}
                                                 label={controlItem.label} 
                                                 value={formData[controlItem.id as keyof LoginForm]}
-                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
                                                     setFormData({
                                                         ...formData,
                                                         [controlItem.id]: e.target.value
