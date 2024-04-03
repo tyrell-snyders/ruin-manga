@@ -8,6 +8,7 @@ import { logger } from "@/utils/logger"
 import { ChapterPages } from "@/utils/types"
 import Image from "next/image"
 import { useState, useContext, useRef, useEffect } from "react"
+import { useParams } from 'next/navigation'
 
 export default function ChapterPage({ params } : { params: { mangaId: string, chapterId: string } }) { 
     // Context
@@ -63,6 +64,8 @@ export default function ChapterPage({ params } : { params: { mangaId: string, ch
 //Image Handling
 function ImagePages({ data, isAuth, user }: { data: ChapterPages, isAuth: boolean, user: User }) {
     const baseImageUrl = 'https://uploads.mangadex.org/data/'
+    const {mangaId, chapterId} = useParams<{mangaId: string, chapterId: string}>()
+
     return (
         <div className="mb-10">
             <div className='rounded-md overflow-hidden'>
@@ -81,7 +84,7 @@ function ImagePages({ data, isAuth, user }: { data: ChapterPages, isAuth: boolea
                         </div>
                     ))}
             </div>
-            <Comments isAuth={isAuth} user={user} />
+            <Comments isAuth={isAuth} user={user} mangaId={mangaId} chapterId={chapterId} />
         </div>
     )
 }

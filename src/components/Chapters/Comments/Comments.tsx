@@ -1,7 +1,8 @@
 'use client'
 
+import { getChapterComments } from '@/services/comic/manga/comments'
 import { User } from '@/utils/interface'
-import { Comment } from '@/utils/types'
+import { Comment, Comments } from '@/utils/types'
 import React, { useEffect, useState } from 'react'
 
 const dummyComments: Comment[] = [
@@ -55,15 +56,28 @@ const dummyUsers: User[] = [
     }
 ]
 
-const Comments = (props: { isAuth: boolean, user: User }) => {
-    const { isAuth, user } = props
+const Comments = (props: { isAuth: boolean, user: User, mangaId: string, chapterId: string }) => {
+    const { isAuth, user, mangaId, chapterId } = props
 
-    const [comments, setComments] = useState<Comment[]>(null)
+    const [comments, setComments] = useState<Comments>(null)
     const [userComment, setUserComment] = useState<string>(null)
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setUserComment(e.target.value)
     }
+
+    const getComments = async() => {
+        const result = await getChapterComments(mangaId, chapterId) as Comments
+        setComments(result)
+    }
+
+    useEffect(() => {
+        getComments()
+    }, [props])
+
+    useEffect(() => {
+        console.log(comments?.comments)
+    }, [comments])
 
     return (
         <div className='border border-gray-200 rounded p-10 mt-12'>
@@ -89,12 +103,12 @@ const Comments = (props: { isAuth: boolean, user: User }) => {
             <div className="flex flex-col">
                 {/* TODO: Get Comments*/}
                 {
-                    dummyComments.map((comment: Comment) => {
-                        const user = dummyUsers.find(user => user.id === comment.userId)
+                    comments?.comments.map((comment: Comment) => {
+                        // const user = dummyUsers.find(user => user.id === comment.userId)
                         return (
                             <>
                                 <div className="flex flex-col mt-4 border p-4 rounded-md" key={comment.id}>
-                                    <p className='text-sm text-gray-600 text-bold'>{user?.username}</p>
+                                    <p className='text-sm text-gray-600 text-bold'>UserName</p>
                                     <p>{comment.comment}</p>
                                     <div>
                                         <button>Up</button>

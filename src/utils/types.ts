@@ -81,3 +81,7 @@ export type Comment = {
     updatedAt?: string;
 }
 
+export type Comments = {
+    comments: Comment[]
+}
+
