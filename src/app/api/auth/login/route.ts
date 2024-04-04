@@ -11,8 +11,6 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
         try {
             // Read the request body as a string
             const requestBody = await req.text()
-            // Parse the string as JSON
-            const body = JSON.parse(requestBody)
 
             const response = await fetch(`${baseUrl}/api/auth/login`, {
                 method: 'POST',
@@ -22,10 +20,10 @@ export const POST = async (req: NextRequest, res: NextApiResponse) => {
                     'Access-Control-Allow-Methods': 'POST',
                     'Access-Control-Allow-Headers': 'Content-Type'
                 },
-                body: JSON.stringify(body)
+                body: requestBody
             })
 
-            if (response.status === 200) {
+            if (response.status === 201) {
                 const data = await response.json()
                 return NextResponse.json({
                     data,

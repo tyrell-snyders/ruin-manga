@@ -85,3 +85,9 @@ export type Comments = {
     comments: Comment[]
 }
 
+export type DecodeUser  = {
+    id: number;
+    email: string;
+    usernmae: string;
+}
+

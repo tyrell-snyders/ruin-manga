@@ -9,6 +9,7 @@ import { LoginForm, User } from "@/utils/interface"
 import { logger } from "@/utils/logger"
 import { loginUser } from "@/services/auth/login/index.service"
 import { useCookies } from 'react-cookie'
+import { DecodeUser } from "@/utils/types"
 
 const initForm: LoginForm = {
     username: '',
@@ -46,24 +47,35 @@ export default function Login() {
                 ? true : false
     }
 
+
+    const parseJWT = (token: string) => {
+        const base64Url = token.split('.')[1]
+        const base64 = decodeURIComponent(atob(base64Url).split('').map((c) => {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+        }).join(''))
+
+        return JSON.parse(base64)
+    }
+
     const handleLogin = async() => {
         try {
             const res = await loginUser(formData)
             if (res?.success) {
+                const uData = parseJWT(res?.data.token) as DecodeUser
                 const userData =  {
-                    id: res?.data.user[0].id,
-                    username: res?.data.user[0].username,
-                    email: res?.data.user[0].email
+                    id: uData.id,
+                    username: uData.usernmae,
+                    email: uData.email
                 } as User
                 setUser(userData)
                 
-                //Create user session with cookies
+                // Create user session with cookies
                 setCookie('token', res?.data.token)
 
-                //Add user data to local storage
+                // Add user data to local storage
                 localStorage.setItem('user', JSON.stringify(userData))
 
-                //Indicate that the user is authorized
+                // Indicate that the user is authorized
                 setIsAuth(true)
             }
         } catch (e) {
