@@ -9,7 +9,7 @@ export const loginUser = async(formData: LoginForm) => {
             const res = await fetch(`${baseUrl}/api/auth/login`, {
                 method: 'POST',
                 headers: {
-                    'content-type': 'application/json'
+                    'content-type': 'appicatlion/json'
                 },
                 body: JSON.stringify(formData),
             })
