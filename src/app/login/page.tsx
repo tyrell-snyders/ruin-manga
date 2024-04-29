@@ -10,6 +10,7 @@ import { logger } from "@/utils/logger"
 import { loginUser } from "@/services/auth/login/index.service"
 import { useCookies } from 'react-cookie'
 import { DecodeUser } from "@/utils/types"
+import { login, details } from "@/components/auth/login"
 
 const initForm: LoginForm = {
     username: '',
@@ -71,6 +72,9 @@ export default function Login() {
                 
                 // Create user session with cookies
                 setCookie('token', res?.data.token)
+
+                login(res?.data.token as string)
+                details()
 
                 // Add user data to local storage
                 localStorage.setItem('user', JSON.stringify(userData))

@@ -1,8 +1,8 @@
 'use client'
 
-import { getChapterComments } from '@/services/comic/manga/comments'
-import { User } from '@/utils/interface'
-import { Comment, Comments } from '@/utils/types'
+import { getChapterComments, postComment } from '@/services/comic/manga/comments'
+import { User, userComment } from '@/utils/interface'
+import { type Comment, type Comments } from '@/utils/types'
 import React, { useEffect, useState } from 'react'
 
 const Comments = (props: { isAuth: boolean, user: User, mangaId: string, chapterId: string }) => {
@@ -10,10 +10,6 @@ const Comments = (props: { isAuth: boolean, user: User, mangaId: string, chapter
 
     const [comments, setComments] = useState<Comments>(null)
     const [userComment, setUserComment] = useState<string>(null)
-
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setUserComment(e.target.value)
-    }
 
     const getComments = async() => {
         const result = await getChapterComments(mangaId, chapterId) as Comments
@@ -24,9 +20,22 @@ const Comments = (props: { isAuth: boolean, user: User, mangaId: string, chapter
         getComments()
     }, [props])
 
-    useEffect(() => {
-        console.log(comments?.comments)
-    }, [comments])
+    const handlePost = async () => {
+        const commData: userComment = {
+            chapter_id: chapterId,
+            comment: userComment,
+            user_id: user.id
+        }
+
+        const data = {
+            mangaId,
+            chapterId,
+            commData
+        }
+
+        await postComment(data)
+        
+    }
 
     return (
         <div className='border border-gray-200 rounded p-10 mt-12'>
@@ -39,9 +48,13 @@ const Comments = (props: { isAuth: boolean, user: User, mangaId: string, chapter
                             <div>
                                 <textarea 
                                     className='w-full rounded-md p-2 text-gray-800' placeholder='Write a comment...' 
-                                    value={userComment} onChange={handleChange}
+                                    value={userComment} onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setUserComment(e.target.value)}
                                 ></textarea>
-                                <button className='text-sm text-gray-500 border border-green-400 p-4 rounded-md bg-green-400'>Post</button>
+                                <button className='text-sm text-gray-500 border border-green-400 p-4 rounded-md bg-green-400'
+                                    onClick={handlePost}
+                                >
+                                    Post
+                                </button>
                             </div>
                         </>
                     ) : (
