@@ -78,7 +78,6 @@ function ImagePages({ data, isAuth, user }: { data: ChapterPages, isAuth: boolea
                                 alt={`Page ${i}`}
                                 width={800}
                                 height={800}
-                                
                                 src={`${baseImageUrl}/${data.hash}/${v}`}
                             />
                         </div>

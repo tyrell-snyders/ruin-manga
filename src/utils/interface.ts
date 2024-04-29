@@ -82,7 +82,7 @@ export interface Favourites {
 }
 
 export interface userComment {
-    username: string,
-    chapterId: string,
+    user_id: number,
+    chapter_id: string,
     comment: string,
 }
