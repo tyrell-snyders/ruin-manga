@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useContext } from "react"
 import { GlobalContext } from "@/context"
-import { Favourite, Favourites } from "@/utils/interface"
+import { Favourite } from "@/utils/interface"
 import { logger } from "@/utils/logger"
 import MangaCards from "@/components/MangaCards/MangaCards"
 import { useRouter } from "next/navigation"

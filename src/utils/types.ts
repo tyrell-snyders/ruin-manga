@@ -79,6 +79,12 @@ export type Comment = {
     downvotes: number;
     createdAt: string;
     updatedAt?: string;
+    ruin_users: CommentUser;
+}
+
+export type CommentUser = {
+    id: number;
+    username: string;
 }
 
 export type Comments = {
@@ -90,4 +96,3 @@ export type DecodeUser  = {
     email: string;
     usernmae: string;
 }
-
