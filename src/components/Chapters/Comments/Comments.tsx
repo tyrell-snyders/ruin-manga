@@ -2,7 +2,7 @@
 
 import { getChapterComments, postComment } from '@/services/comic/manga/comments'
 import { User, userComment } from '@/utils/interface'
-import { type Comment, type Comments } from '@/utils/types'
+import { type Comment, type Comments, type CommentUser } from '@/utils/types'
 import React, { useEffect, useState } from 'react'
 
 const Comments = (props: { isAuth: boolean, user: User, mangaId: string, chapterId: string }) => {
@@ -13,6 +13,7 @@ const Comments = (props: { isAuth: boolean, user: User, mangaId: string, chapter
 
     const getComments = async() => {
         const result = await getChapterComments(mangaId, chapterId) as Comments
+        console.log(result)
         setComments(result)
     }
 
@@ -34,7 +35,6 @@ const Comments = (props: { isAuth: boolean, user: User, mangaId: string, chapter
         }
 
         await postComment(data)
-        
     }
 
     return (
@@ -66,11 +66,10 @@ const Comments = (props: { isAuth: boolean, user: User, mangaId: string, chapter
                 {/* TODO: Get Comments*/}
                 {
                     comments?.comments.map((comment: Comment) => {
-                        // const user = dummyUsers.find(user => user.id === comment.userId)
                         return (
                             <>
                                 <div className="flex flex-col mt-4 border p-4 rounded-md" key={comment.id}>
-                                    <p className='text-sm text-gray-600 text-bold'>UserName</p>
+                                    <p className='text-sm text-gray-600 text-bold'>{comment.ruin_users.username}</p>
                                     <p>{comment.comment}</p>
                                     <div>
                                         <button>Up</button>
