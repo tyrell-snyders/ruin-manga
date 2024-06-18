@@ -1,44 +1,32 @@
 'use client'
 
-import { Manga, Mng, SearchResults } from "@/utils/types"
-import Link from "next/link"
-import { useState, memo, useEffect } from "react"
-import CoverArt from "../CoverArt/CoverArt"
-import { useRouter } from "next/navigation"
+import { Mng, SearchResults } from "@/utils/types";
+import { useState, useEffect, memo } from "react";
+import { useRouter } from "next/navigation";
+import CoverArt from "../CoverArt/CoverArt";
 
 const styles = {
     grid: 'mt-8 grid gap-6 lg:grid-cols-4 sm:gap-4 md:grid-cols-2'
-}
-
-const useConditionalRender = (results: SearchResults, coverArt: string[]) => {
-    const [shouldRender, setShouldRender] = useState(results != null && coverArt?.length > 0);
-
-    useEffect(() => {
-        setShouldRender(results != null && coverArt?.length > 0);
-    }, [results, coverArt]);
-
-    return shouldRender;
 };
 
-export const SrchResults = (props: { srchResults: SearchResults, coverArt: string[] }) => {
-    const shouldRender = useConditionalRender(props.srchResults, props.coverArt);
-    // hooks
-    const [results, setResults] = useState<Mng[]>([])
-    const [coverArt, setCoverArt] = useState<string[]>([])
-    const router = useRouter()
+const SrchResults = memo((props: { srchResults: SearchResults | null, coverArt: string[] }) => {
+    const [results, setResults] = useState<Mng[]>([]);
+    const [coverArt, setCoverArt] = useState<string[]>([]);
+    const router = useRouter();
 
     useEffect(() => {
-        // Initialize useState values every time the props are changed
-        setResults(props.srchResults?.data)
-        setCoverArt(props.coverArt)
-    }, [props])
+        if (props.srchResults) {
+            setResults(props.srchResults.data);
+            setCoverArt(props.coverArt);
+        }
+    }, [props.srchResults, props.coverArt]);
 
     return (
         <div>
             <h2>Search Results</h2>
             <div className={styles.grid}>
                 {
-                    shouldRender && results && results.length && coverArt && coverArt.length ?
+                    results.length > 0 && coverArt.length > 0 ?
                         results.map((res, i) => (
                             <div key={res.id} onClick={() => router.push(`manga/${res?.id}`)} className="cursor-pointer">
                                 <h4>{res.attributes.title.en}</h4>
@@ -48,7 +36,9 @@ export const SrchResults = (props: { srchResults: SearchResults, coverArt: strin
                 }
             </div>
         </div>
-    )
-}
+    );
+});
 
-export default memo(SrchResults);
+SrchResults.displayName = 'SrchResults';
+
+export default SrchResults;
