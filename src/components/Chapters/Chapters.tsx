@@ -89,7 +89,7 @@ export default function Chapters() {
                     onClick={() => handlePageChange(page + 1)}
                     className={styles.button}
                 >
-                Next
+                    Next
                 </button>
             </div>
         </section>
