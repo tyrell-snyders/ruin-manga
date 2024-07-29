@@ -18,5 +18,10 @@ export const navOptions = [
         id: 'search',
         label: 'Search',
         path: '/search'
+    },
+    {
+        id: 'account',
+        label: 'Account',
+        path: '/Account'
     }
 ]
