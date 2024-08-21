@@ -95,4 +95,5 @@ export type DecodeUser  = {
     id: number;
     email: string;
     usernmae: string;
+    avatar: object
 }

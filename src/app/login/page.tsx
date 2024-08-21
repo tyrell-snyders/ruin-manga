@@ -66,7 +66,8 @@ export default function Login() {
                 const userData =  {
                     id: uData.id,
                     username: uData.usernmae,
-                    email: uData.email
+                    email: uData.email,
+                    avatar: uData.avatar
                 } as User
                 setUser(userData)
                 

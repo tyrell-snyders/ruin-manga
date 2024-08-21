@@ -4,6 +4,7 @@ import { useState, useEffect, useContext } from "react"
 import { logger } from "@/utils/logger"
 import { GlobalContext } from "@/context"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 
 const styles = {
     container: `flex flex-col items-center justify-center mt-20`,
@@ -26,38 +27,43 @@ export default function AccoutPage() {
     const { loading, user, isAuth, favourites } = context
 
     const router = useRouter()
-
-        return (
-            <>
-                { !loading && isAuth && favourites && favourites.favourites.length ? 
-                    (
-                        <div className={styles.container}>
-                            <h1 className={styles.h1}>Welcome, {user.username}</h1>
-                            <section className={styles.section}>
-                                {/* Friends */}
-                                <div className={styles.gridItem}>
-                                    <h2 className={styles.h2}>Friends</h2>
-                                    {/* Friends count */}
-                                    {13}
-                                </div>
-                                {/* Discussions */}
-                                <div className={styles.gridItem}>
-                                    <h2 className={styles.h2}>Discussions</h2>
-                                    {/* Discussions count */}
-                                    {10}
-                                </div>
-                                {/* Favourites */}
-                                <div className={styles.gridItem} onClick={() => router.push('/Favourites')}>
-                                    <h2 className={styles.h2}>Favourites</h2>
-                                    {/* Favourites count */}
-                                    {favourites?.favourites.length}
-                                </div>
-                            </section>
-                        </div>
-                ) : ( 
-                    <div className={styles.container}>Loading...</div>
-                )
-            }
-            </>
-        )
+    return (
+        <>
+            { !loading && isAuth && favourites && favourites.favourites.length ? 
+                (
+                    <div className={styles.container}>
+                        <Image 
+                            src={user.avatar.imageUrl}
+                            alt="Profile Picture"
+                            width={100} 
+                            height={100}
+                        />
+                        <h1 className={styles.h1}>Welcome, {user.username}</h1>
+                        <section className={styles.section}>
+                            {/* Friends */}
+                            <div className={styles.gridItem}>
+                                <h2 className={styles.h2}>Friends</h2>
+                                {/* Friends count */}
+                                {13}
+                            </div>
+                            {/* Discussions */}
+                            <div className={styles.gridItem}>
+                                <h2 className={styles.h2}>Discussions</h2>
+                                {/* Discussions count */}
+                                {10}
+                            </div>
+                            {/* Favourites */}
+                            <div className={styles.gridItem} onClick={() => router.push('/Favourites')}>
+                                <h2 className={styles.h2}>Favourites</h2>
+                                {/* Favourites count */}
+                                {favourites?.favourites.length}
+                            </div>
+                        </section>
+                    </div>
+            ) : ( 
+                <div className={styles.container}>Loading...</div>
+            )
+        }
+        </>
+    )
 }

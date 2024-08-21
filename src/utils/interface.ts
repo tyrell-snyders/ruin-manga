@@ -46,6 +46,10 @@ export type User = {
     id: number;
     username: string;
     email: string;
+    avatar: {
+        id: number,
+        imageUrl: string
+    }
 }
 
 export interface Users {
